@@ -1,7 +1,8 @@
 import lower from '../images/lower.png'
 import upper from '../images/upper.png'
+import React from 'react';
 
-const SideLayout = () => {
+const SideLayout : React.FC = () => {
     return ( 
         <div className="w-[100%] h-[100%] bg-[#22543D] flex flex-col justify-between items-center text-white">
             <div className="flex w-[100%] justify-end h-[30%]">
