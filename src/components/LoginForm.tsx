@@ -25,7 +25,7 @@ const LoginForm : React.FC = () => {
           <div className='w-[70%] flex flex-col justify-center'>
             
           <div className='w-[78%] flex flex-row mb-5 justify-between'>
-                    <div className='flex gap-1'> <input type="checkbox" name="" id="" /> <p> Remeber me</p></div>
+                    <div className='flex gap-1'> <input type="checkbox" name="" id="" /> <p> Remember me</p></div>
                     <p className='text-[#22543D] cursor-pointer'>Forgot Password?</p>
                 </div>
 
