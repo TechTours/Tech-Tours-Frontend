@@ -2,7 +2,8 @@ import React from 'react';
 import {BiUserCircle} from 'react-icons/bi'
 
 type props = {
-    header : React.FC
+    header : React.FC,
+    footer : React.FC
 }
 
 const HomeLayout : React.FC<props> = (props) => {
@@ -12,7 +13,9 @@ const HomeLayout : React.FC<props> = (props) => {
                 <props.header />
             </div>
             <div></div>
-            <div></div>
+            <div> 
+                <props.footer />
+            </div>
          </div>
      );
 }
