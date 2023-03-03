@@ -4,7 +4,7 @@ import{CiLinkedin} from 'react-icons/ci'
 
 const Footer = () => {
     return ( 
-        <div className="bg-white w-[100vw] flex flex-col justify-center items-center mt-10">
+        <div className="bg-white w-[100vw] flex flex-col justify-center items-center mt-20">
          <div className="w-[92%] flex flex-row  border-b-2 border-gray-300 justify-between mb-2">
             
              <div className=" flex flex-col w-[30%] mb-10 ">
@@ -36,7 +36,7 @@ const Footer = () => {
                 </div>
              </div>
              </div>
-         <div>&copy; Copyright. All rights reserved.</div>
+         <div className='mb-2'>&copy; Copyright. All rights reserved.</div>
         </div>
      );
 }
