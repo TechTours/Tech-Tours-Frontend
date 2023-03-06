@@ -1,5 +1,7 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import SideNumbers from '../components/SideNumbers';
+import ReportForm from '../components/ReportForm';
 
 type props = {
     header : React.FC,
@@ -13,13 +15,12 @@ const Report: React.FC = (props) => {
             <Header />
         </div>
         <div className='flex flex-row w-[92%] mt-3'>
-            <div className='flex w-[80%] justify-center items-center bg-pink-300'>
-                <props.map />
+            <div className='flex w-[20%] justify-center items-center bg-pink-300'>
+            <SideNumbers />
             </div>
-            <div className='flex w-[20%] justify-center items-center'>
-                <props.navigation />
+            <div className='flex w-[80%] items-center'>
+                <ReportForm />
             </div>
-            Hello World
         </div>
         <div> 
             <Footer />
