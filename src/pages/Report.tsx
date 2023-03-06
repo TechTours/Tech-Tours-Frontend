@@ -15,10 +15,10 @@ const Report: React.FC = (props) => {
             <Header />
         </div>
         <div className='flex flex-row w-[92%] mt-3'>
-            <div className='flex w-[20%] justify-center items-center bg-pink-300'>
+            <div className='flex w-[20%] justify-center items-center'>
             <SideNumbers />
             </div>
-            <div className='flex w-[80%] items-center'>
+            <div className='w-[80%] '>
                 <ReportForm />
             </div>
         </div>
