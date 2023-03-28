@@ -53,7 +53,7 @@ const RegisterForm : React.FC = () => {
             <div className='h-[1px] bg-gray-400 w-[40%]'></div>
              </div>
            <button className='bg-white shadow-xl text-center w-[60%] text-[#22543D] mb-2 '>Sign Up with Google</button>
-           <p>Already have an account? <span className='text-[#22543D] cursor-pointer'>Sign in </span></p>
+           <p>Already have an account? <a href="/login"><span className='text-[#22543D] cursor-pointer'>Sign in </span></a></p>
           </div>
        </div>
       );

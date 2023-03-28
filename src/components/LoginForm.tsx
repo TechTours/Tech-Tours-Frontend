@@ -26,7 +26,7 @@ const LoginForm : React.FC = () => {
             
           <div className='w-[78%] flex flex-row mb-5 justify-between'>
                     <div className='flex gap-1'> <input type="checkbox" name="" id="" /> <p> Remember me</p></div>
-                    <p className='text-[#22543D] cursor-pointer'>Forgot Password?</p>
+                    <a href="/forgot"><p className='text-[#22543D] cursor-pointer'>Forgot Password?</p></a>
                 </div>
 
 
@@ -37,7 +37,7 @@ const LoginForm : React.FC = () => {
             <div className='h-[1px] bg-gray-400 w-[40%]'></div>
              </div>
            <button className='bg-white shadow-xl text-center w-[78%] text-[#22543D] mb-2 '>Sign In with Google</button>
-           <p className='text-center w-[78%]'>Already have an account? <span className='text-[#22543D] cursor-pointer'>Sign up </span></p>
+           <p className='text-center w-[78%]'>Already have an account? <a href="/register"><span className='text-[#22543D] cursor-pointer'>Sign up </span></a></p>
           </div>
        </div>
       );

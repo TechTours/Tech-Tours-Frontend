@@ -23,7 +23,7 @@ const ForgotPassword : React.FC = () => {
            <button className='bg-[#22543D] text-white w-[78%] text-center'>Send</button>
            <div className='flex w-[78%] items-center justify-center mt-2 mb-2 border-xl'> 
              </div>
-           <p className='text-center w-[78%]'>Ot you can <span className='text-[#22543D] cursor-pointer'>Login </span></p>
+           <p className='text-center w-[78%]'>Or you can <a href="/login"><span className='text-[#22543D] cursor-pointer'>Login </span></a></p>
           </div>
        </div>
       );
