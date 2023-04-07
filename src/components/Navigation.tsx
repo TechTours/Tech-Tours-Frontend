@@ -49,8 +49,9 @@ const Navigation = () => {
           
           <div className='mt-5 w-[80%]'>
             <button className='w-[100%] flex flex-row bg-[#22543D] mt-3  text-white justify-center items-center  gap-3' >View Activity</button>
-            <button className=' w-[100%] flex flex-row bg-white  text-[#22543D] mt-3 mb-2 justify-center items-center shadow-md gap-3'>Report Sighting</button>
-          </div>
+            <a href="/report"><button className=' w-[100%] flex flex-row bg-white  text-[#22543D] mt-3 mb-2 justify-center items-center shadow-md gap-3'>Report Sighting</button>
+      </a>
+            </div>
         </div>
      );
 }

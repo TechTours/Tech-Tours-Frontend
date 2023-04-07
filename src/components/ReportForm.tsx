@@ -1,4 +1,17 @@
-const ReportForm = () => {
+import { useState } from 'react';
+type props = {
+    setCurrentInputFunction : Function;
+}
+
+const ReportForm = (props : props) => {
+
+
+    const [selectedInput , setSelectedInput]  = useState(1);
+    const modifyCurrentInput = (currentInput : number) =>{
+        props.setCurrentInputFunction(se);
+        setSelectedInput(currentInput)
+      }
+
     return ( 
         <div>
             <div className="text-[#22543D] font-bold text-xl text-center w-[100%] "><h2>REPORT SIGHTING</h2></div>
