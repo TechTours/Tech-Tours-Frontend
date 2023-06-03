@@ -1,7 +1,7 @@
 import React from 'react';
 const LoginForm : React.FC = () => {
     return (
-       <div className='w-[100%] h-[100%] bg-white flex flex-col justify-center items-center'>
+       <div className='w-[100%] h-[100%] bg-[#E5E5E5] flex flex-col justify-center items-center'>
           <div className='w-[70%] mb-2'>
             <p className='text-3xl font-bold text-[#22543D] mb-2'>Login</p>
             <p>Welcome to TechTour. Please enter your details.</p>

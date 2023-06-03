@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import SideNumbers from '../components/SideNumbers';
 import ReportForm from '../components/ReportForm';
 import { useState } from 'react';
+import SuccessReport from "../components/SuccessReport";
 
 type props = {
     header : React.FC,
@@ -10,12 +11,18 @@ type props = {
 }
 
 const Report: React.FC = (props) => {
+    const [isPopUp, setIsPopUp] = useState(true);
     const [currentInput , setCurrentInput]  = useState(1);
     const setCurrentInputFunction = (currentInput : number) =>{
       setCurrentInput(currentInput);
     }
+
+    const setCurrentIsPopValue = (isPopUp : boolean) => {
+        setIsPopUp(isPopUp);
+    }
     return (  
         <div className="w-[100%] flex flex-col items-center overflow-x-hidden">
+            {!isPopUp ? "" : <SuccessReport/>}
         <div>
             <Header />
         </div>
@@ -24,13 +31,14 @@ const Report: React.FC = (props) => {
             <SideNumbers currentInput={currentInput} />
             </div>
             <div className='w-[80%] '>
-                <ReportForm setCurrentInputFunction={setCurrentInputFunction} />
+                <ReportForm setCurrentInputFunction={setCurrentInputFunction} setCurrentIsPopValue={setCurrentIsPopValue}/>
             </div>
         </div>
-        <div> 
+        <div>
             <Footer />
         </div>
      </div>
+     
       );
 }
  

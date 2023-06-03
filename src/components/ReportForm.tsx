@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import SuccessReport from './SuccessReport';
 type props = {
     setCurrentInputFunction : Function;
+    setCurrentIsPopValue: Function;
 }
 
 const ReportForm = (props : props) => {
@@ -49,8 +51,11 @@ const ReportForm = (props : props) => {
 
                     <div className="flex flex-row justify-end items-end w-[85%] gap-3 mt-4">
                         <button className="bg-slate-200 text-[#22543d]">Cancel</button>
-                        <button className="bg-[#22543d] text-white">Submit</button>
+                        <button className="bg-[#22543d] text-white"onClick={
+                            props.setCurrentIsPopValue(true)
+                        }>Submit</button>
                     </div>
+                  
     
             </div>
         </div>
