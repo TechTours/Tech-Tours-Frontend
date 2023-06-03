@@ -11,7 +11,7 @@ type props = {
 }
 
 const Report: React.FC = (props) => {
-    const [isPopUp, setIsPopUp] = useState(true);
+    const [isPopUp, setIsPopUp] = useState(false);
     const [currentInput , setCurrentInput]  = useState(1);
     const setCurrentInputFunction = (currentInput : number) =>{
       setCurrentInput(currentInput);
@@ -22,7 +22,7 @@ const Report: React.FC = (props) => {
     }
     return (  
         <div className="w-[100%] flex flex-col items-center overflow-x-hidden">
-            {!isPopUp ? "" : <SuccessReport/>}
+            {isPopUp ? "" : <SuccessReport/>}
         <div>
             <Header />
         </div>

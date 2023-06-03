@@ -12,7 +12,7 @@ const SideLayout : React.FC = () => {
 
             <div>
                 <p className="text-3xl text-center mb-2">TechTours</p>
-                <p>"Find your way to the wild with cutting-edge technology"</p>
+                <p className=" lg:flex sm:hidden">"Find your way to the wild with cutting-edge technology"</p>
             </div>
 
             <div className="flex w-[100%] justify-start h-[30%]">
