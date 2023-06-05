@@ -18,15 +18,15 @@ const Report: React.FC = (props) => {
     }
 
     const setCurrentIsPopValue = (isPopUp : boolean) => {
-        setIsPopUp(isPopUp);
+        setIsPopUp(!isPopUp);
     }
     return (  
-        <div className="w-[100%] flex flex-col items-center overflow-x-hidden">
-            {isPopUp ? "" : <SuccessReport/>}
+        <div className="w-[100%] flex flex-col items-center overflow-hidden">
+            {!isPopUp ? "" : <SuccessReport/>}
         <div>
             <Header />
         </div>
-        <div className='flex flex-row w-[92%] mt-3'>
+        <div className='flex lg:flex-row w-[92%] mt-3 msm:flex-col'>
             <div className='flex w-[20%] justify-center items-center'>
             <SideNumbers currentInput={currentInput} />
             </div>
