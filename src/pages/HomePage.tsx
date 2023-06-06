@@ -9,7 +9,7 @@ const HomePage = () => {
   
     return (  
    <div className=' overflow-x-hidden'>
-     <HomeLayout header={Header} footer={Footer} map={Maps} navigation={Navigation} />
+     <HomeLayout header={Header} footer={Footer}  navigation={Navigation} />
    </div>
       );
 }
