@@ -1,20 +1,20 @@
-import { IProvidedProps } from 'google-maps-react';
+// import { IProvidedProps } from 'google-maps-react';
 import React, { ComponentType, ReactElement } from 'react';
 import {BiUserCircle} from 'react-icons/bi'
-import { Map, GoogleApiWrapper, IMapProps ,  } from 'google-maps-react';
+// import { Map, GoogleApiWrapper, IMapProps ,  } from 'google-maps-react';
 
-type GoogleApiWrapper = <Props extends IMapProps>(
-    WrappedComponent: React.ComponentType<Props>
-  ) => React.ComponentType<Omit<Props, keyof IMapProps>>;
+// type GoogleApiWrapper = <Props extends IMapProps>(
+//     WrappedComponent: React.ComponentType<Props>
+//   ) => React.ComponentType<Omit<Props, keyof IMapProps>>;
 
-interface MapContainerProps extends IMapProps {
-    google: any;
-  } 
+// interface MapContainerProps extends IMapProps {
+//     google: any;
+//   } 
 
 type props = {
     header : React.FC,
     footer : React.FC,
-    map : React.FC<MapContainerProps>,
+    // map : React.FC<MapContainerProps>,
     navigation : React.FC
 }
 
@@ -26,7 +26,7 @@ const HomeLayout : React.FC<props> = (props) => {
             </div>
             <div className='flex flex-row w-[92%] mt-3'>
                 <div className='flex w-[80%] justify-center items-center bg-pink-300'>
-                    <props.map />
+                    Hello World
                 </div>
                 <div className='flex w-[20%] justify-center items-center'>
                     <props.navigation />
