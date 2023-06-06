@@ -14,7 +14,7 @@ const ReportForm = (props : props) => {
             <div className="flex flex-col w-[100%] justify-center items-center">
                 <div className="p-5 flex flex-col bg-slate-200 rounded-md w-[85%] mt-8">
                     <label className="text-md font-bold text-[#22543d]" htmlFor="Current Location:">CURRENT LOCATION:</label>
-                    <input className="text-sm p-2 rounded-md mt-2 shadow-md" type="text" name="" id="" placeholder="Current Location" value={"Akagera National Park"}  readOnly onFocus={()=> {
+                    <input className=" bg-white text-black pl-2 text-sm p-2 rounded-md mt-2 shadow-md" type="text" name="" id="" placeholder="Current Location" value={"Akagera National Park"}  readOnly onFocus={()=> {
                         props
                         .setCurrentInputFunction(1)
                     }}/>
@@ -22,7 +22,7 @@ const ReportForm = (props : props) => {
 
                     <div className="p-5 flex flex-col bg-slate-200 rounded-md w-[85%] mt-8">
                     <label className="text-md font-bold text-[#22543d]" htmlFor="Add Sighting:">ADD SIGHTING:</label>
-                    <select name="" className="text-sm p-2 rounded-md mt-2 shadow-md" id="" onFocus={()=> {
+                    <select name="" className="bg-white text-black pl-2 text-sm p-2 rounded-md mt-2 shadow-md" id="" onFocus={()=> {
                         props
                         .setCurrentInputFunction(2)
                     }}>
@@ -37,7 +37,7 @@ const ReportForm = (props : props) => {
 
                     <div className="p-5 flex flex-col bg-slate-200 rounded-md w-[85%] mt-8">
                     <label className="text-md font-bold text-[#22543d]" htmlFor="Time:">TIME:</label>
-                    <select name="" className="text-sm p-2 rounded-md mt-2 shadow-md" id="" onFocus={()=> {
+                    <select name="" className=" bg-white text-black pl-2 text-sm p-2 rounded-md mt-2 shadow-md" id="" onFocus={()=> {
                         props
                         .setCurrentInputFunction(3)
                     }}>

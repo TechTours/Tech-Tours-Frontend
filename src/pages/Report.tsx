@@ -21,7 +21,7 @@ const Report: React.FC = (props) => {
         setIsPopUp(!isPopUp);
     }
     return (  
-        <div className="w-[100%] flex flex-col items-center overflow-hidden">
+        <div className="w-[100%] flex flex-col items-center overflow-hidden bg-white">
             {!isPopUp ? "" : <SuccessReport/>}
         <div>
             <Header />

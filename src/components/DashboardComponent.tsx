@@ -59,7 +59,7 @@ const DashboardComponent = () => {
             <div className="w-[92%] flex flex-row justify-between items-center">
                 <div className="p-2 font-bold text-xl text-[#22543D]">Dashboard</div>
                 <div className="pt-1"> 
-                <button className="text-black shadow-sm shadow-[#22543D]">Create New User</button>
+                <button className="text-black bg-white shadow-sm shadow-[#22543D]">Create New User</button>
             </div>
             </div>
            </div>
@@ -90,7 +90,7 @@ const DashboardComponent = () => {
             </div>
             
            </div>
-           <div className="bg-white w-[100%] h-[42vh] rounded-md mt-4 flex justify-center items-center pt-20 pb-20 shadow-md">
+           <div className="bg-white w-[100%] h-[42vh] rounded-md mt-4 flex justify-center items-center pt-20 pb-20 shadow-md text-black">
            {/* <Doughnut data={data} /> */}
            This part will contain  a graph
            </div>
