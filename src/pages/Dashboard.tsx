@@ -4,6 +4,7 @@ import DashboardComponent from "../components/DashboardComponent";
 
 import SideBarDash from "../components/SideBarDash";
 import UsersDash from "../components/UsersDash";
+import ActivitiesTrack from '../components/ActivitiesTrack';
 
 const Dashboard = () => {
     const [currentPage , setCurrentPage] = useState(1);
@@ -21,7 +22,7 @@ const Dashboard = () => {
                 </div>
                 <div className="w-[100%] h-[90%] flex flex-row justify-center items-center ">
                     {
-                        currentPage === 1 ? <DashboardComponent /> : <UsersDash />
+                        currentPage === 1 ? <DashboardComponent /> :  currentPage === 2 ?  <UsersDash /> : <ActivitiesTrack /> 
                     }
                 </div>
             </div>
