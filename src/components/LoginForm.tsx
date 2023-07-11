@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../api/apiConfig';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
+
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -29,6 +34,28 @@ const LoginForm: React.FC = () => {
     console.log('Form submitted!');
     console.log('Email:', email);
     console.log('Password:', password);
+
+    axios.post(`${BASE_URL}/user/login`, { email, password }).then((res) => {
+      console.log(res);
+      Toastify({
+        text: "SuccessFully Logged In",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "green"
+      }).showToast();
+    }
+    ).catch((err) => {
+      console.log(err);
+      Toastify({
+        text: err.response.data.message,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red"
+      }).showToast();
+    }
+    );
 
     // Reset the form state
     setEmail('');
