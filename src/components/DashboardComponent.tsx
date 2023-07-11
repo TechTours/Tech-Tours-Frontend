@@ -5,7 +5,11 @@ import { Doughnut } from 'react-chartjs-2';
 import NotificationAdmin from "./NoticationAdmin";
 
 
-const DashboardComponent = () => {
+type Props = {
+  getCurrentPage : (page : number)=>void
+}
+
+const DashboardComponent = (Props : Props) => {
 
     type dataType = {
         title : string,
@@ -13,8 +17,10 @@ const DashboardComponent = () => {
         percentage : string,
         icon : string,
         color : string
+        
     }
 
+    
     const dataComp : dataType[] = [
         { "title" : "Total number of accounts" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowUp" , "color" : "#009289" },
         { "title" : "Reported Sightings" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowDown" , "color" : "#E29578" },
@@ -52,7 +58,9 @@ const DashboardComponent = () => {
   ],
 };
 
-    
+const renderCreateUser = ()=>{
+  Props.getCurrentPage(2.1)
+}
     return ( 
         <div className="w-[100%] h-[100%] flex flex-col justify-center items-start ">
              {/* the first part start  */}
@@ -60,7 +68,7 @@ const DashboardComponent = () => {
             <div className="w-[92%] flex flex-row justify-between items-center">
                 <div className="p-2 font-bold text-xl text-[#22543D]">Dashboard</div>
                 <div className="pt-1"> 
-                <button className="text-black bg-white shadow-sm shadow-[#22543D]">Create New User</button>
+                <button className="text-black bg-white shadow-sm shadow-[#22543D]" onClick={renderCreateUser}>Create New User</button>
             </div>
             </div>
            </div>

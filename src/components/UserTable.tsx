@@ -1,7 +1,14 @@
 import {IoIosArrowDown} from 'react-icons/io'
 import {AiOutlineEye} from 'react-icons/ai'
 
-const UserTable = () => {
+type Props = {
+    getCurrentPage : (page : number)=>void
+}
+
+const UserTable = (props : Props) => {
+  const renderUpdateUser = ()=>{
+    props.getCurrentPage(2.2)
+  }
     return ( 
         <div className="w-[95%] pt-3">
            <table className="min-w-full">
@@ -30,7 +37,7 @@ const UserTable = () => {
         </div>
       </td>
       <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2">View <AiOutlineEye/> </a>
+      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
       </td>
     </tr>
     {/* <!-- Add more rows as needed --> */}
