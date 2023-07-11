@@ -37,7 +37,7 @@ const LoginForm : React.FC = () => {
             <div className='h-[1px] bg-gray-400 w-[40%]'></div>
              </div>
            <button className='bg-white shadow-xl text-center w-[78%] text-[#22543D] mb-2 '>Sign In with Google</button>
-           <p className='text-center w-[78%] text-[#22543D]'>Already have an account? <a href="/register"><span className='text-[#22543D] cursor-pointer'>Sign up </span></a></p>
+           <p className='text-center w-[78%] text-[#22543D]'>Already have an account? <a href="/signup"><span className='text-[#22543D] cursor-pointer'>Sign up </span></a></p>
           </div>
        </div>
       );

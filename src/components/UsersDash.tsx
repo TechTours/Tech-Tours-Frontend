@@ -1,4 +1,6 @@
 import UserTable from "./UserTable";
+import {AiOutlineBars} from "react-icons/ai"
+import {AiOutlineUserAdd} from "react-icons/ai"
 
 const UsersDash = () => {
     return ( 
@@ -7,8 +9,9 @@ const UsersDash = () => {
        <div className="w-[100%] h-[10%]  flex flex-row justify-center items-start ">
        <div className="w-[92%] flex flex-row justify-between items-center">
            <div className="p-2 font-bold text-xl text-[#22543D]">Manage Users</div>
-           <div className="pt-1"> 
-           <button className="text-black shadow-sm shadow-[#22543D] bg-white">Create New User</button>
+           <div className=" flex pt-1 space-x-3"> 
+           <button className="text-black shadow-sm shadow-[#22543D] bg-white flex items-center justify-center gap-1" > <AiOutlineBars /> Sort By Date</button>
+           <button className="text-white shadow-sm shadow-[#22543D] bg-[#22543D] flex items-center justify-center gap-1"> <AiOutlineUserAdd />  Create New User</button>
        </div>
        </div>
       </div>
