@@ -1,4 +1,9 @@
 import { useState } from "react";
+import axios from 'axios';
+import { BASE_URL } from '../api/apiConfig';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
+
     
     const RegisterForm: React.FC = () => {
         const [adminId, setAdminId] = useState('');
@@ -69,6 +74,37 @@ import { useState } from "react";
           console.log('Confirm Password:', confirmPassword);
           console.log('Email:', email);
           console.log('Phone Number:', phoneNumber);
+          const isAdmin = true;
+          const fullName = username;
+          
+         axios.post(`${BASE_URL}/user/admin/enroll`, { 
+         userName:  username , 
+         fullName ,
+          email ,
+           password , 
+           code : adminId , 
+           tel : phoneNumber ,
+            isAdmin 
+        }).then((res) => {
+            console.log(res);
+            Toastify({
+              text: "SuccessFully Registered",
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "green"
+            }).showToast();
+         })
+          .catch((err) => {
+            console.log(err);
+            Toastify({
+              text: err.response.data.message,
+              duration: 3000,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "red"
+            }).showToast();
+          })
       
           // Reset the form state
           setAdminId('');
