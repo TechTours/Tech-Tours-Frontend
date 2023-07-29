@@ -44,6 +44,14 @@ const LoginForm: React.FC = () => {
         position: "right",
         backgroundColor: "green"
       }).showToast();
+      //redirecting to dashboard
+      if(res.data.data.isAdmin === true){
+        window.location.href = "/admin/dashboard";
+        const token = res.data.data.token;
+      }else{
+        window.location.href = "/";
+      }
+      
     }
     ).catch((err) => {
       console.log(err);
@@ -56,6 +64,7 @@ const LoginForm: React.FC = () => {
       }).showToast();
     }
     );
+
 
     // Reset the form state
     setEmail('');
