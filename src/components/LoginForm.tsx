@@ -36,7 +36,6 @@ const LoginForm: React.FC = () => {
     console.log('Password:', password);
 
     axios.post(`${BASE_URL}/user/login`, { email, password }).then((res) => {
-      console.log(res);
       Toastify({
         text: "SuccessFully Logged In",
         duration: 3000,
@@ -45,12 +44,16 @@ const LoginForm: React.FC = () => {
         backgroundColor: "green"
       }).showToast();
       //redirecting to dashboard
+
+      localStorage.setItem("user", JSON.stringify(res.data.data));
+      localStorage.setItem("isAdmin", res.data.data.isAdmin);
+      localStorage.setItem("token", res.data.token);
+      
       if(res.data.data.isAdmin === true){
         window.location.href = "/admin/dashboard";
-        const token = res.data.data.token;
       }else{
         window.location.href = "/";
-      }
+      } 
       
     }
     ).catch((err) => {
