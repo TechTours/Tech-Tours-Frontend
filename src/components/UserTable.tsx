@@ -1,181 +1,143 @@
-import {IoIosArrowDown} from 'react-icons/io'
-import {AiOutlineEye} from 'react-icons/ai'
+
+import { AiOutlineEye } from 'react-icons/ai';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../api/apiConfig';
 
 type Props = {
-    getCurrentPage : (page : number)=>void
-}
+  getCurrentPage: (page: number) => void;
+};
 
-const UserTable = (props : Props) => {
-  const renderUpdateUser = ()=>{
-    props.getCurrentPage(2.2)
-  }
-    return ( 
-        <div className="w-[95%] pt-3">
-           <table className="min-w-full">
-  <thead className="shadow-md text-[#22543D]">
-    <tr>
-      <th className="py-2 px-4 text-center">Username</th>
-      <th className="py-2 px-4 text-center">Email</th>
-      <th className="py-2 px-4 text-center">Phone Number</th>
-      <th className="py-2 px-4 text-center">Config ID</th>
-      <th className="py-2 px-4 text-center">Status</th>
-      <th className="py-2 px-4 text-center">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {/* <!-- Table rows --> */}
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
+const UserTable = (props: Props) => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8); // Change this number to adjust items per page
+
+  const getUsers = () => {
+    setLoading(true);
+    try {
+      // use axios to fetch
+      const token = localStorage.getItem('token');
+      const headers = {
+        token: token,
+      };
+
+      axios
+        .get(`${BASE_URL}/user/all`, { headers: headers })
+        .then((res) => {
+          const allUsers = res.data.data;
+          const filteredUsers = allUsers.filter((user: any) => user.isAdmin === false);
+          setUsers(filteredUsers);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(true);
+          setLoading(false);
+        });
+    } catch (error) {
+      setError(true);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const renderUpdateUser = () => {
+    props.getCurrentPage(2.2);
+  };
+
+  // Pagination
+  const indexOfLastUser = currentPage * itemsPerPage;
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  return (
+    <div className="w-[95%] pt-3">
+      <table className="min-w-full">
+      <thead className="shadow-md text-[#22543D]">
+          <tr>
+            <th className="py-2 px-4 text-center">Username</th>
+            <th className="py-2 px-4 text-center">Email</th>
+            <th className="py-2 px-4 text-center">Phone Number</th>
+            <th className="py-2 px-4 text-center">Config ID</th>
+            <th className="py-2 px-4 text-center">Status</th>
+            <th className="py-2 px-4 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* Table rows */}
+          {loading ? (
+            // Loading row
+            <tr>
+              <td colSpan={6} className="w-[100%] h-[100%] flex flex-col justify-center items-center">
+                Loading...
+              </td>
+            </tr>
+          ) : error ? (
+            // Error row
+            <tr>
+              <td colSpan={6} className="w-[100%] h-[100%] flex flex-col justify-center items-center">
+                <div className="text-xl font-bold text-red-500">Error Fetching Users</div>
+              </td>
+            </tr>
+          ) : (
+            // Displaying paginated users
+            currentUsers.map((user: any, index: number) => (
+              <tr key={index} className="text-black">
+               <td className="py-2 px-4 text-center">{user.userName}</td>
+                <td className="py-2 px-4 text-center">{user.email}</td>
+                <td className="py-2 px-4 text-center">{user.tel}</td>
+                <td className="py-2 px-4 text-center">TechTours19</td>
+                <td className="py-2 px-4 text-center">
         <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
+        {user.isActive ? (  <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
             Enabled
-          </div>
+          </div>) : (
+              <div className="appearance-none w-21 bg-[#ec55273f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
+              Disabled
+            </div>
+          )}
         </div>
       </td>
       <td className="py-2 px-4 text-center">
       <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
+         </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+      {/* Pagination buttons */}
+      <div className="flex justify-end mt-3 space-x-2">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="bg-green-900 hover:cursor-pointer text-white font-bold py-1 px-4 rounded"
+        >
+          Prev
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={currentUsers.length < itemsPerPage}
+          className="bg-green-900 hover:cursor-pointer text-white font-bold py-1 px-4 rounded"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+};
 
-   
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
-        <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
-            Enabled
-          </div>
-        </div>
-      </td>
-      <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
-
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
-        <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
-            Enabled
-          </div>
-        </div>
-      </td>
-      <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
-
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
-        <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
-            Enabled
-          </div>
-        </div>
-      </td>
-      <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
-
-
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
-        <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
-            Enabled
-          </div>
-        </div>
-      </td>
-      <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
-
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
-        <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
-            Enabled
-          </div>
-        </div>
-      </td>
-      <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
-
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
-        <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
-            Enabled
-          </div>
-        </div>
-      </td>
-      <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
-
-
-    <tr className='text-black'>
-      <td className="py-2 px-4 text-center">JohnDoe</td>
-      <td className="py-2 px-4 text-center">johndoe@example.com</td>
-      <td className="py-2 px-4 text-center">1234567890</td>
-      <td className="py-2 px-4 text-center">C12345</td>
-      <td className="py-2 px-4 text-center">
-        <div className="flex items-center justify-center">
-          <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
-            Enabled
-          </div>
-        </div>
-      </td>
-      <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
-      </td>
-    </tr>
-    {/* <!-- Add more rows as needed --> */}
-  </tbody>
-</table>
-
-
-        </div>
-     );
-}
- 
 export default UserTable;
