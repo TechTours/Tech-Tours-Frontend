@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../api/apiConfig';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 
 const CreateUserComponent = () => {
-  const [configurationId, setConfigurationId] = useState('');
+  const [configurationId, setConfigurationId] = useState('techtours19');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -55,6 +59,39 @@ const CreateUserComponent = () => {
     console.log('Email:', email);
     console.log('Phone Number:', phoneNumber);
 
+    const token = localStorage.getItem("token");
+    const headers = {
+      token : token
+  }
+
+    axios.post(`${BASE_URL}/user/enroll`, { 
+      userName:  username , 
+      fullName : username ,
+       email ,
+        password , 
+        tel : phoneNumber ,
+         isAdmin : false
+     } , {headers : headers} ).then((res) => {
+         console.log(res);
+         Toastify({
+           text: `SuccessFully Registered User ${username}`,
+           duration: 3000,
+           gravity: "top",
+           position: "right",
+           backgroundColor: "green"
+         }).showToast();
+      })
+       .catch((err) => {
+         console.log(err);
+         Toastify({
+           text: err.response.data.error,
+           duration: 3000,
+           gravity: "top",
+           position: "right",
+           backgroundColor: "red"
+         }).showToast();
+       })
+
     // Reset the form state
     setConfigurationId('');
     setUsername('');
@@ -85,10 +122,12 @@ const CreateUserComponent = () => {
                 <input
                   type="text"
                   id="configurationId"
+
                   className={`border-2xl w-[40%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${
                     errors.configurationId ? 'border-red-500' : ''
                   }`}
                   value={configurationId}
+                  readOnly
                   onChange={(e) => setConfigurationId(e.target.value)}
                 />
                 {errors.configurationId && <p className="text-red-500">{errors.configurationId}</p>}

@@ -7,7 +7,7 @@ const SignupForm : React.FC = () => {
             <p className='text-[#22543D]'>Welcome to TechTour. Please enter your details.</p>
           </div>
           <div className='w-[90%] mt-5 mb-2 flex flex-row '>
-            <div className=' w-[50%] flex flex-col justify-center items-center'>
+            <div className=' w-[50%] flex flex-col j    ustify-center items-center'>
 
                 <div className='w-[100%] flex flex-col mb-5'>
                     <label className='text-black' htmlFor="Configuration ID">Configuration ID</label>
