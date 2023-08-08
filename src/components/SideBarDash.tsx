@@ -3,14 +3,14 @@ import {HiOutlineUserCircle , HiOutlineTrendingUp} from 'react-icons/hi'
 import { useState } from 'react';
 
 type props = {
-    getCurrentPage : (page : number)=>void
+    getCurrentPage : (page : number , user : any)=>void
 }
 const SideBarDash : React.FC<props> = (props) => {
     const [selected , setSelected] = useState(1);
 
     const changeSelected = (sample : number)=>{
        setSelected(sample)
-       props.getCurrentPage(sample)
+       props.getCurrentPage(sample , {})
     }
 
     return ( 

@@ -11,8 +11,10 @@ import CreateUserComponent from '../components/CreateUserComponent';
 const Dashboard = () => {
 
     const [currentPage , setCurrentPage] = useState(1);
-    const getCurrentPage = (page : number)=>{
+    const [user , setUser] = useState({} as any)
+    const getCurrentPage = (page : number , user : any )=>{
      setCurrentPage(page)
+     setUser(user)
     }
     return ( 
         <div className=" w-[100%] flex h-[100vh] flex-row bg-[#F5F5F5] justify-center items-center">
@@ -25,7 +27,7 @@ const Dashboard = () => {
                 </div>
                 <div className="w-[100%] h-[90%] flex flex-row justify-center items-center ">
                     {
-                        currentPage === 1 ? <DashboardComponent getCurrentPage={getCurrentPage} /> :  currentPage === 2 ?  <UsersDash getCurrentPage={getCurrentPage} /> : currentPage === 2.1 ? <CreateUserComponent /> : currentPage == 2.2 ? <UpdateAndViewUser /> : <ActivitiesTrack /> 
+                        currentPage === 1 ? <DashboardComponent getCurrentPage={getCurrentPage} /> :  currentPage === 2 ?  <UsersDash getCurrentPage={getCurrentPage} /> : currentPage === 2.1 ? <CreateUserComponent /> : currentPage == 2.2 ? <UpdateAndViewUser user={user} /> : <ActivitiesTrack /> 
                     }
                 </div>
             </div>

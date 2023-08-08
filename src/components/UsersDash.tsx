@@ -3,17 +3,17 @@ import {AiOutlineBars} from "react-icons/ai"
 import {AiOutlineUserAdd} from "react-icons/ai"
 
 type Props = {
-    getCurrentPage : (page : number)=>void
+    getCurrentPage : (page : number , user : any)=>void
 }
 
 const UsersDash = (Props : Props) => {
 
   const renderCreateUser = ()=>{
-    Props.getCurrentPage(2.1)
+    Props.getCurrentPage(2.1 , {})
   }
 
-  const renderUpdateUser = (value : number)=>{
-    Props.getCurrentPage(value)
+  const renderUpdateUser = (value : number , user : any)=>{
+    Props.getCurrentPage(value , user)
   }
     return ( 
         <div className="w-[100%] h-[100%] flex flex-col justify-center items-start ">

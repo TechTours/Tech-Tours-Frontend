@@ -6,7 +6,7 @@ import NotificationAdmin from "./NoticationAdmin";
 
 
 type Props = {
-  getCurrentPage : (page : number)=>void
+  getCurrentPage : (page : number , user : any)=>void
 }
 
 const DashboardComponent = (Props : Props) => {
@@ -59,7 +59,7 @@ const DashboardComponent = (Props : Props) => {
 };
 
 const renderCreateUser = ()=>{
-  Props.getCurrentPage(2.1)
+  Props.getCurrentPage(2.1 , null)
 }
     return ( 
         <div className="w-[100%] h-[100%] flex flex-col justify-center items-start ">

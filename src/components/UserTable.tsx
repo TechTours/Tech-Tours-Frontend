@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BASE_URL } from '../api/apiConfig';
 
 type Props = {
-  getCurrentPage: (page: number) => void;
+  getCurrentPage: (page: number , user : any) => void;
 };
 
 const UserTable = (props: Props) => {
@@ -46,8 +46,8 @@ const UserTable = (props: Props) => {
     getUsers();
   }, []);
 
-  const renderUpdateUser = () => {
-    props.getCurrentPage(2.2);
+  const renderUpdateUser = (user : any) => {
+    props.getCurrentPage(2.2 , user);
   };
 
   // Pagination
@@ -81,17 +81,22 @@ const UserTable = (props: Props) => {
           {loading ? (
             // Loading row
             <tr>
-              <td colSpan={6} className="w-[100%] h-[100%] flex flex-col justify-center items-center">
-                Loading...
-              </td>
-            </tr>
+                <td></td>
+                <td></td>
+                <td className="  w-[100%] h-[100%] flex flex-col justify-center items-center p-3 font-bold text-black text-xl ">
+                  Loading...
+                  </td>
+               </tr>
           ) : error ? (
             // Error row
-            <tr>
-              <td colSpan={6} className="w-[100%] h-[100%] flex flex-col justify-center items-center">
-                <div className="text-xl font-bold text-red-500">Error Fetching Users</div>
-              </td>
-            </tr>
+               <tr>
+                <td></td>
+                <td></td>
+                <td className="  w-[100%] h-[100%] flex flex-col justify-center items-center p-3 font-bold text-[#ec55276c] text-xl ">
+                  Error Fetching Users
+                  </td>
+               </tr>
+            
           ) : (
             // Displaying paginated users
             currentUsers.map((user: any, index: number) => (
@@ -112,7 +117,9 @@ const UserTable = (props: Props) => {
         </div>
       </td>
       <td className="py-2 px-4 text-center">
-      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={renderUpdateUser}>View <AiOutlineEye/> </a>
+      <a href="#" className="text-[#22543D] font-bold underline flex items-center justify-center gap-2" onClick={()=>{
+        renderUpdateUser(user);
+      }}>View <AiOutlineEye/> </a>
          </td>
               </tr>
             ))
