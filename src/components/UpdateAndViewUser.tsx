@@ -5,7 +5,8 @@ import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 
 type Props = {
-    user : any
+    user : any,
+    getCurrentPage : (page : number , user : any)=>void
 }
 
 const CreateUserComponent = (props : Props) => {
@@ -17,6 +18,10 @@ const CreateUserComponent = (props : Props) => {
   const [errors, setErrors] = useState<{ isActive?: string; username?: string; isAdmin?: string; email?: string; phoneNumber?: string }>(
     {}
   );
+
+  const backToUsers = ()=>{
+    props.getCurrentPage(2 , null)
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +67,7 @@ const CreateUserComponent = (props : Props) => {
       token : token
   }
 
-    axios.post(`${BASE_URL}/user/update`, { 
+    axios.put(`${BASE_URL}/user/update/${props.user._id}`, { 
       userName:  username , 
       fullName : username ,
        email ,
@@ -79,6 +84,7 @@ const CreateUserComponent = (props : Props) => {
            position: "right",
            backgroundColor: "green"
          }).showToast();
+          backToUsers()
       })
        .catch((err) => {
          console.log(err);
@@ -119,7 +125,6 @@ const CreateUserComponent = (props : Props) => {
                     errors.isActive ? 'border-red-500' : ''
                   }`}
                   value={isActive}
-                  readOnly
                   onChange={(e) => setIsActive(e.target.value)}
                 />
                 {errors.isActive && <p className="text-red-500">{errors.isActive}</p>}
@@ -146,7 +151,7 @@ const CreateUserComponent = (props : Props) => {
                   isAdmin
                 </label>
                 <input
-                  type="password"
+                  type="text"
                   id="password"
                   className={`border-2xl w-[40%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${
                     errors.isAdmin ? 'border-red-500' : ''
@@ -190,11 +195,11 @@ const CreateUserComponent = (props : Props) => {
               </div>
 
               <div className="w-[40%] flex flex-row justify-between mb-5 gap-5">
-                <button className="bg-[#fffff] text-[#22543D] w-[40%] text-center font-bold border-2 border-[#22543D]">
+                <button className="bg-[#fffff] text-[#22543D] w-[40%] text-center font-bold border-2 border-[#22543D]" onClick={backToUsers}>
                   Back
                 </button>
                 <button className="bg-[#22543D] text-white w-[40%] text-center" type="submit">
-                  Create
+                  Update
                 </button>
               </div>
             </form>
