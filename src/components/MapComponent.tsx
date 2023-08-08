@@ -30,7 +30,7 @@ class MapComponent extends React.Component<MapComponentProps, MapComponentState>
       <Map
         google={google}
         zoom={12}
-        initialCenter={{ lat:  -1.783833, lng:  30.491943 }}
+        initialCenter={{ lat:  -2.1463182, lng:  30.08962 }}
         style={{ width: '100%', height: '100vh' }}
       >
         {this.state.pins.map((pin, index) => (

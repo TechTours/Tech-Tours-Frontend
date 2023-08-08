@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SuccessReport from './SuccessReport';
+import axios from 'axios';
+import { BASE_URL } from '../api/apiConfig';
+import Toastify from 'toastify-js';
 
 type Props = {
   setCurrentInputFunction: Function;
@@ -11,6 +14,32 @@ const ReportForm = (props: Props) => {
   const [sighting, setSighting] = useState('');
   const [time, setTime] = useState('');
   const [errors, setErrors] = useState<{ sighting?: string; time?: string }>({});
+
+  // the states for the location fetching 
+  const [latitude, setLatitude] = useState<number | undefined>(undefined);
+  const [longitude, setLongitude] = useState<number | undefined>(undefined);
+  const [error, setError] = useState<string | null>(null);
+
+  const getGeolocation = () => {
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+      (position)=>{
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude)
+        setError(null)
+      },
+      (error) => {
+        setError(`Error; ${error.message}`)
+      }      
+      );
+    }else {
+      setError(`Geolocation is not supported by this browser`)
+    }
+  }
+
+  useEffect(()=>{
+    getGeolocation();
+  } , [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,6 +72,56 @@ const ReportForm = (props: Props) => {
     setTime('');
     setErrors({});
     props.setCurrentIsPopValue(true);
+    
+    const timeNow = new Date();
+    const timeToAdd = parseInt(time);
+    const timeDetected = new Date(timeNow.getTime() + timeToAdd * 60000);
+
+    if(latitude == null || longitude == null || latitude == undefined || longitude == undefined){
+      Toastify({
+        text: "Failed to create an activity",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red"
+      }).showToast();
+    
+      return
+    }
+    
+    const body = {
+      animal : sighting,
+      location : currentLocation,
+      time : timeDetected,
+      longitude : longitude?.toString(),
+      latitude : latitude?.toString()
+    }
+
+    const token = localStorage.getItem('token')
+    const headers = {
+      token : token
+    }
+
+    axios.post(`${BASE_URL}/activity/create` , body , {headers : headers})
+    .then((res) => {
+      Toastify({
+        text: res.data.message,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "green"
+      }).showToast();
+    })
+    .catch(err => {
+      Toastify({
+        text: "Failed to create an activity",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "red"
+      }).showToast();
+    })
+
   };
 
   return (
@@ -108,11 +187,11 @@ const ReportForm = (props: Props) => {
               }}
             >
               <option value="">Select an option</option>
-              <option value="1 minute ago">1 minute ago</option>
-              <option value="2 minute ago">2 minute ago</option>
-              <option value="3 minute ago">3 minute ago</option>
-              <option value="4 minute ago">4 minute ago</option>
-              <option value="5 minute ago">5 minute ago</option>
+              <option value="1">1 minute ago</option>
+              <option value="2">2 minute ago</option>
+              <option value="3">3 minute ago</option>
+              <option value="4">4 minute ago</option>
+              <option value="5">5 minute ago</option>
             </select>
             {errors.time && <p className="text-red-500">{errors.time}</p>}
           </div>

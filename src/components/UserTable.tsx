@@ -127,7 +127,7 @@ const UserTable = (props: Props) => {
         </tbody>
       </table>
       {/* Pagination buttons */}
-      <div className="flex justify-end mt-3 space-x-2">
+      <div className="flex justify-end mt-3 space-x-2 pb-2">
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 1}
