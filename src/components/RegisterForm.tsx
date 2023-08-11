@@ -91,8 +91,8 @@ import 'toastify-js/src/toastify.css';
               text: "SuccessFully Registered",
               duration: 3000,
               gravity: "top",
-              position: "right",
-              backgroundColor: "green"
+              position: "left",
+              backgroundColor: "#22543D"
             }).showToast();
          })
           .catch((err) => {
@@ -101,8 +101,8 @@ import 'toastify-js/src/toastify.css';
               text: err.response.data.message,
               duration: 3000,
               gravity: "top",
-              position: "right",
-              backgroundColor: "red"
+              position: "left",
+              backgroundColor: "#ec55273f"
             }).showToast();
           })
       

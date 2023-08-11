@@ -40,20 +40,22 @@ const LoginForm: React.FC = () => {
         text: "SuccessFully Logged In",
         duration: 3000,
         gravity: "top",
-        position: "right",
-        backgroundColor: "green"
+        position: "left",
+        backgroundColor: "#22543D",
+        callback: function () {
+          localStorage.setItem("user", JSON.stringify(res.data.data));
+          localStorage.setItem("isAdmin", res.data.data.isAdmin);
+          localStorage.setItem("token", res.data.token);
+          
+          if(res.data.data.isAdmin === true){
+            window.location.href = "/admin/dashboard";
+          }else{
+            window.location.href = "/";
+          } 
+        }
       }).showToast();
       //redirecting to dashboard
 
-      localStorage.setItem("user", JSON.stringify(res.data.data));
-      localStorage.setItem("isAdmin", res.data.data.isAdmin);
-      localStorage.setItem("token", res.data.token);
-      
-      if(res.data.data.isAdmin === true){
-        window.location.href = "/admin/dashboard";
-      }else{
-        window.location.href = "/";
-      } 
       
     }
     ).catch((err) => {
@@ -62,8 +64,8 @@ const LoginForm: React.FC = () => {
         text: err.response.data.message,
         duration: 3000,
         gravity: "top",
-        position: "right",
-        backgroundColor: "red"
+        position: "left",
+        backgroundColor: "#ec55273f"
       }).showToast();
     }
     );

@@ -5,16 +5,21 @@ import Footer from '../components/Footer';
 import Maps from '../components/Map';
 import Navigation from '../components/Navigation';
 import MapComponent from '../components/MapComponent';
+import MapSideBar from '../components/MapSideBar';
 
 const HomePage = () => {
   
     return (  
-   <div className=' overflow-x-hidden'>
+   <div className=' overflow-x-hidden flex w-[100%] h-[100vh]'>
+
      {/* <HomeLayout  /> */}
-     <div>
-       <h1>My Map</h1>
+     <div className='w-[80%]'>
+       {/* <h1>My Map</h1> */}
        <MapComponent />
       </div>
+          <div className='w-[20%]'>
+  <MapSideBar />
+    </div>
    </div>
       );
 }
