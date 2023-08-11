@@ -13,11 +13,11 @@ const HomePage = () => {
    <div className=' overflow-x-hidden flex w-[100%] h-[100vh]'>
 
      {/* <HomeLayout  /> */}
-     <div className='w-[80%]'>
+     <div className='w-[70%]'>
        {/* <h1>My Map</h1> */}
        <MapComponent />
       </div>
-          <div className='w-[20%]'>
+          <div className='w-[30%]'>
   <MapSideBar />
     </div>
    </div>

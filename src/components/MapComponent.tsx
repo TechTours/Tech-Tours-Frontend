@@ -48,7 +48,7 @@ class MapComponent extends React.Component<MapComponentProps, MapComponentState>
         google={google}
         zoom={10}
         initialCenter={{ lat:  -1.9294044343094023, lng:  30.70120671841402 }}
-        style={{ width: '80%', height: '100vh' }}
+        style={{ width: '70%', height: '100vh' }}
         styles={[
           {
             featureType: "poi",
