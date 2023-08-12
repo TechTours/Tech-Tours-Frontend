@@ -2,7 +2,7 @@
 import { AiOutlineEye } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BASE_URL } from '../api/apiConfig';
+import { BASE_URL } from '../../api/apiConfig';
 
 type Props = {
   getCurrentPage: (page: number , user : any) => void;

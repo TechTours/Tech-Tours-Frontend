@@ -1,7 +1,7 @@
-import lower from '../images/lower.png'
-import upper from '../images/upper.png'
+import lower from '../../images/lower.png'
+import upper from '../../images/upper.png'
 import React from 'react';
- import '../assets/someCss.css'
+ import '../../assets/someCss.css'
 
 const SideLayout : React.FC = () => {
     return ( 

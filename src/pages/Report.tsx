@@ -1,9 +1,9 @@
 import Footer from "../components/UI/Footer";
-import Header from "../components/Header";
-import SideNumbers from '../components/SideNumbers';
-import ReportForm from '../components/ReportForm';
+import Header from "../components/User/Header";
+import SideNumbers from '../components/User/SideNumbers';
+import ReportForm from '../components/User/ReportForm';
 import { useState } from 'react';
-import SuccessReport from "../components/SuccessReport";
+import SuccessReport from "../components/User/SuccessReport";
 
 type props = {
     header : React.FC,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SuccessReport from './SuccessReport';
 import axios from 'axios';
-import { BASE_URL } from '../api/apiConfig';
+import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
 
 type Props = {

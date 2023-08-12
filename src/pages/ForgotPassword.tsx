@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import FormsLayout from '../components/FormsLayout'
+import FormsLayout from '../components/User/FormsLayout'
 import ForgotPassword from '../components/User/ForgotPasswordForm'
 import SideLayout from '../components/User/SideLayout'
 

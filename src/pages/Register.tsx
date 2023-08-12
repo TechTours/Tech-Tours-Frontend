@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import FormsLayout from '../components/FormsLayout'
+import FormsLayout from '../components/User/FormsLayout'
 import SideLayout from '../components/User/SideLayout'
 import RegisterForm from '../components/User/RegisterForm'
 

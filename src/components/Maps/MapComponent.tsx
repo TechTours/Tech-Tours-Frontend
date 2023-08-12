@@ -1,8 +1,8 @@
 import React from 'react';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
-import lion from '../images/lion.png';
-import buffalo from '../images/buffalo.png';
-import elephant from '../images/elephant.png';
+import lion from '../../images/lion.png';
+import buffalo from '../../images/buffalo.png';
+import elephant from '../../images/elephant.png';
 
 interface MapComponentProps {
   google: any; // Add the appropriate type for the 'google' prop

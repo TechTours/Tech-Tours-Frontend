@@ -1,6 +1,6 @@
-import logo from '../images/logo.png'
-import sight1 from '../images/sight1.png'
-import sight2 from '../images/sight2.png'
+import logo from '../../images/logo.png'
+import sight1 from '../../images/sight1.png'
+import sight2 from '../../images/sight2.png'
 
 const MapSideBar = () => {
     return ( 
