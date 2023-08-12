@@ -50,7 +50,7 @@ const LoginForm: React.FC = () => {
           if(res.data.data.isAdmin === true){
             window.location.href = "/admin/dashboard";
           }else{
-            window.location.href = "/";
+            window.location.href = "/user/dashboard";
           } 
         }
       }).showToast();

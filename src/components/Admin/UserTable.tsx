@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 
 type Props = {
-  getCurrentPage: (page: number , user : any) => void;
+  getCurrentPage: (page: number , user : any) => void | null ;
 };
 
 const UserTable = (props: Props) => {

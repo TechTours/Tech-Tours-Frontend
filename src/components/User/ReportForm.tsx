@@ -3,6 +3,7 @@ import SuccessReport from './SuccessReport';
 import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   setCurrentInputFunction: Function;
@@ -14,6 +15,7 @@ const ReportForm = (props: Props) => {
   const [sighting, setSighting] = useState('');
   const [time, setTime] = useState('');
   const [errors, setErrors] = useState<{ sighting?: string; time?: string }>({});
+  const navigate = useNavigate();
 
   // the states for the location fetching 
   const [latitude, setLatitude] = useState<number | undefined>(undefined);
@@ -109,7 +111,10 @@ const ReportForm = (props: Props) => {
         duration: 3000,
         gravity: "top",
         position: "right",
-        backgroundColor: "green"
+        backgroundColor: "green",
+        callback: function () {
+          navigate("/user/sightings");
+        }
       }).showToast();
     })
     .catch(err => {
@@ -197,7 +202,7 @@ const ReportForm = (props: Props) => {
           </div>
 
           <div className="flex flex-row justify-end items-end w-[85%] gap-3 mt-4">
-            <button className="bg-slate-200 text-[#22543d]" type="button">
+            <button className="bg-slate-200 text-[#22543d]" type="button" onClick={()=>{navigate("/user/dashboard")}}>
               Cancel
             </button>
             <button className="bg-[#22543d] text-white" type="submit">
