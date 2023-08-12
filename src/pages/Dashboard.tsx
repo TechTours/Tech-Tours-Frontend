@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import AdminHeader from "../components/AdminHeader";
-import DashboardComponent from "../components/DashboardComponent";
-import UpdateAndViewUser from '../components/UpdateAndViewUser';
-import SideBarDash from "../components/SideBarDash";
-import UsersDash from "../components/UsersDash";
-import ActivitiesTrack from '../components/ActivitiesTrack';
-import CreateUserComponent from '../components/CreateUserComponent';
+import AdminHeader from "../components/Admin/AdminHeader";
+import DashboardComponent from "../components/Admin/DashboardComponent";
+import UpdateAndViewUser from '../components/Admin/UpdateAndViewUser';
+import SideBarDash from "../components/User/SideBarDash";
+import UsersDash from "../components/Admin/UsersDash";
+import ActivitiesTrack from '../components/Admin/ActivitiesTrack';
+import CreateUserComponent from '../components/Admin/CreateUserComponent';
 
 
 const Dashboard = () => {

@@ -1,4 +1,4 @@
-import Footer from "../components/Footer";
+import Footer from "../components/UI/Footer";
 import Header from "../components/Header";
 import SideNumbers from '../components/SideNumbers';
 import ReportForm from '../components/ReportForm';

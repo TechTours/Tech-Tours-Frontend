@@ -9,7 +9,7 @@ import SignupPage from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/response/NotFound';
 import UnAuthorized from './pages/response/UnAuthorized';
-import { PrivateRoutes, ProtectAdminRoutes } from './components/routing/protections';
+import { PrivateRoutes, ProtectAdminRoutes } from './components/Routes/protections';
 
 const App = () => {
   function AuthenticatedRoutes() {

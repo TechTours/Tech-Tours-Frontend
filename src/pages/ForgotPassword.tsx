@@ -1,7 +1,7 @@
 import React , {useState} from 'react'
 import FormsLayout from '../components/FormsLayout'
-import ForgotPassword from '../components/ForgotPasswordForm'
-import SideLayout from '../components/SideLayout'
+import ForgotPassword from '../components/User/ForgotPasswordForm'
+import SideLayout from '../components/User/SideLayout'
 
 
 function ForgotPage() {

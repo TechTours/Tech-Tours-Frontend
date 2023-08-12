@@ -1,5 +1,5 @@
 import { useState , useEffect } from "react";
-import { BASE_URL } from "../api/apiConfig";
+import { BASE_URL } from "../../api/apiConfig";
 import axios from "axios";
 
 const ActivitiesTable = () => {

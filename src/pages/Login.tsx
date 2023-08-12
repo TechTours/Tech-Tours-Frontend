@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import FormsLayout from '../components/FormsLayout'
-import SideLayout from '../components/SideLayout'
+import SideLayout from '../components/User/SideLayout'
 import LoginForm from '../components/LoginForm'
 
 

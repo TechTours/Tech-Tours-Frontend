@@ -1,11 +1,11 @@
 import React from 'react';
-import HomeLayout from '../components/HomeLayout';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Maps from '../components/Map';
-import Navigation from '../components/Navigation';
-import MapComponent from '../components/MapComponent';
-import MapSideBar from '../components/MapSideBar';
+import HomeLayout from '../components/User/HomeLayout';
+import Header from '../components/User/Header';
+import Footer from '../components/UI/Footer';
+import Maps from '../components/Maps/Map';
+import Navigation from '../components/Maps/Navigation';
+import MapComponent from '../components/Maps/MapComponent';
+import MapSideBar from '../components/Maps/MapSideBar';
 
 const HomePage = () => {
   
