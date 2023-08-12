@@ -10,6 +10,9 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/response/NotFound';
 import UnAuthorized from './pages/response/UnAuthorized';
 import { PrivateRoutes, ProtectAdminRoutes } from './components/Routes/protections';
+import UserDashboard from './pages/UserDashboard';
+import UserSightings from './pages/UserSightings';
+import UserProfile from './pages/UserProfile';
 
 const App = () => {
   function AuthenticatedRoutes() {
@@ -35,6 +38,9 @@ const App = () => {
             {/* the authenticated user routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/report" element={<Report />} />
+            <Route path='/user/dashboard' element={<UserDashboard />} />
+            <Route path='/user/sightings' element={<UserSightings />} />
+            <Route path='/user/profile' element={<UserProfile />} />
 
             {/* // the authenticated admin routes */}
             <Route element={<ProtectAdminRoutes />}>
