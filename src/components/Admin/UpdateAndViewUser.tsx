@@ -3,24 +3,27 @@ import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
+import { useNavigate , useLocation } from 'react-router-dom';
 
-type Props = {
-    user : any,
-    getCurrentPage : (page : number , user : any)=>void
+type props = {
+  user : any
 }
 
-const CreateUserComponent = (props : Props) => {
-  const [isActive, setIsActive] = useState(props.user.isActive);
-  const [username, setUsername] = useState(props.user.userName);
-  const [isAdmin, setIsAdmin] = useState(props.user.isAdmin);
-  const [email, setEmail] = useState(props.user.email);
-  const [phoneNumber, setPhoneNumber] = useState(props.user.tel);
+const UpdateUserAndView = (props : props) => {
+  const navigate = useNavigate();
+   const user = props.user;
+  const [isActive, setIsActive] = useState(user.isActive);
+  const [username, setUsername] = useState(user.userName);
+  const [isAdmin, setIsAdmin] = useState(user.isAdmin);
+  const [email, setEmail] = useState(user.email);
+  const [phoneNumber, setPhoneNumber] = useState(user.tel);
   const [errors, setErrors] = useState<{ isActive?: string; username?: string; isAdmin?: string; email?: string; phoneNumber?: string }>(
     {}
   );
+  
 
   const backToUsers = ()=>{
-    props.getCurrentPage(2 , null)
+    navigate("/admin/users")
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,7 +70,7 @@ const CreateUserComponent = (props : Props) => {
       token : token
   }
 
-    axios.put(`${BASE_URL}/user/update/${props.user._id}`, { 
+    axios.put(`${BASE_URL}/user/update/${user._id}`, { 
       userName:  username , 
       fullName : username ,
        email ,
@@ -79,10 +82,13 @@ const CreateUserComponent = (props : Props) => {
          console.log(res);
          Toastify({
            text: `SuccessFully Updated User ${username}`,
-           duration: 3000,
+           duration: 1000,
            gravity: "top",
            position: "right",
-           backgroundColor: "green"
+           backgroundColor: "green",
+           callback: function () {
+              navigate("/admin/users")
+            }
          }).showToast();
           backToUsers()
       })
@@ -103,7 +109,7 @@ const CreateUserComponent = (props : Props) => {
     <div className="w-[100%] h-[100%] flex flex-col justify-center items-start">
       <div className="w-[100%] h-[10%] flex flex-row justify-center items-start">
         <div className="w-[92%] flex flex-row justify-between items-center">
-          <div className="p-2 font-bold text-xl text-[#22543D]">Update Or View User {props.user.userName}</div>
+          <div className="p-2 font-bold text-xl text-[#22543D]">Update Or View User {user.userName}</div>
         </div>
       </div>
 
@@ -211,4 +217,4 @@ const CreateUserComponent = (props : Props) => {
   );
 };
 
-export default CreateUserComponent;
+export default UpdateUserAndView;

@@ -3,17 +3,16 @@ import { AiOutlineEye } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
+import { useNavigate } from 'react-router-dom';
 
-type Props = {
-  getCurrentPage: (page: number , user : any) => void | null ;
-};
 
-const UserTable = (props: Props) => {
+const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Change this number to adjust items per page
+  const navigate = useNavigate();
 
   const getUsers = () => {
     setLoading(true);
@@ -46,8 +45,11 @@ const UserTable = (props: Props) => {
     getUsers();
   }, []);
 
-  const renderUpdateUser = (user : any) => {
-    props.getCurrentPage(2.2 , user);
+  const renderUpdateUser = (user : {}) => {
+    if(user === undefined) return;
+    if(user === null) return;
+    console.log(user);
+    navigate("/admin/users/update", {state: {user: user}})
   };
 
   // Pagination

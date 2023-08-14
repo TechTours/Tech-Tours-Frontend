@@ -13,6 +13,10 @@ import { PrivateRoutes, ProtectAdminRoutes } from './components/Routes/protectio
 import UserDashboard from './pages/UserDashboard';
 import UserSightings from './pages/UserSightings';
 import UserProfile from './pages/UserProfile';
+import AdminUsersDash from './pages/AdminUsersDash';
+import AdminActivitiesDash from './pages/AdminActivityDash';
+import AdminCreateUser from './pages/AdminCreateUser';
+import AdminUpdateAndView from './pages/AdminUpdateAndView';
 
 const App = () => {
   function AuthenticatedRoutes() {
@@ -46,6 +50,10 @@ const App = () => {
             <Route element={<ProtectAdminRoutes />}>
               <Route path="/admin/register" element={<SignupPage />} />
               <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/users" element={<AdminUsersDash />} />
+              <Route path="/admin/activities" element={<AdminActivitiesDash />} />
+              <Route path="/admin/users/create" element={<AdminCreateUser />} />
+              <Route path="/admin/users/update" element={<AdminUpdateAndView />} />
             </Route>
 
           </Route>
