@@ -44,19 +44,19 @@ class MapComponent extends React.Component<MapComponentProps, MapComponentState>
 
     return (
       <div className='w-[100%] h-[100vh]'>
-      <Map
-        google={google}
-        zoom={10}
-        initialCenter={{ lat:  -1.9294044343094023, lng:  30.70120671841402 }}
-        style={{ width: '70%', height: '100vh' }}
-        styles={[
-          {
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [{ visibility: "off" }],
-          },
-        ]}
-      >
+     <Map
+          google={google}
+          zoom={10}
+          initialCenter={{ lat: -1.9294044343094023, lng: 30.70120671841402 }}
+          style={{ width: '100%', height: '100%' }}
+          styles={[
+            {
+              featureType: "poi", // Point of Interest
+              elementType: "labels",
+              stylers: [{ visibility: "off" }], // Hide labels for POIs
+            },
+          ]}
+        >
         {this.state.pins.map((pin, index) => (
           <Marker
             key={index}

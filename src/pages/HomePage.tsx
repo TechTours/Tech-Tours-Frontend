@@ -1,26 +1,31 @@
 import React from 'react';
-import HomeLayout from '../components/User/HomeLayout';
-import Header from '../components/User/Header';
-import Footer from '../components/UI/Footer';
-import Maps from '../components/Maps/Map';
-import Navigation from '../components/Maps/Navigation';
 import MapComponent from '../components/Maps/MapComponent';
 import MapSideBar from '../components/Maps/MapSideBar';
+import sight1 from '../images/sight1.png'
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const [popup , setPopup] = React.useState(false);
+
+  const togglePopup = () => {
+    setPopup(!popup);
+  }
+
   
     return (  
-   <div className=' overflow-x-hidden flex w-[100%] h-[100vh]'>
+      <div className='w-[100%] flex flex-row bg-black h-[100vh]' >
 
-     {/* <HomeLayout  /> */}
-     <div className='w-[70%]'>
-       {/* <h1>My Map</h1> */}
-       <MapComponent />
+        {
+          popup == true ? <MapSideBar renderPopUp={togglePopup} /> : (<div onClick={togglePopup} className='absolute z-10 bottom-5 left-2 bg-white w-[10vw] h-[15vh] shadow-sm'>
+          <img src={sight1} alt="" />
+        </div>)
+        }
+      
+        <div className='w-[100%] h-[100%] '>
+          <MapComponent />
+        </div>
       </div>
-          <div className='w-[30%]'>
-  <MapSideBar />
-    </div>
-   </div>
       );
 }
  
