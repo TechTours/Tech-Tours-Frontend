@@ -1,6 +1,5 @@
 import DataComponent from "./DataComponent";
 import React , {useState} from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import NotificationAdmin from "./NoticationAdmin";
 
 
@@ -26,9 +25,6 @@ const DashboardComponent = (Props : Props) => {
         { "title" : "Drones in Use" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowDown" , "color" : "#E29578" },
         { "title" : "Animals in the Park" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowUp" , "color" : "#009289" },
     ]
-
-
-    ChartJS.register(ArcElement, Tooltip, Legend);
 
  const data = {
   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
