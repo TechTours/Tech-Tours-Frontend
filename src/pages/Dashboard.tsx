@@ -27,7 +27,7 @@ const Dashboard = () => {
                 </div>
                 <div className="w-[100%] h-[90%] flex flex-row justify-center items-center ">
                     {
-                        currentPage === 1 ? <DashboardComponent getCurrentPage={getCurrentPage} /> :  currentPage === 2 ?  <UsersDash getCurrentPage={getCurrentPage} /> : currentPage === 2.1 ? <CreateUserComponent /> : currentPage == 2.2 ? <UpdateAndViewUser getCurrentPage={getCurrentPage} user={user} /> : <ActivitiesTrack /> 
+                        currentPage === 1 ? <DashboardComponent getCurrentPage={getCurrentPage} /> :  currentPage === 2 ?  <UsersDash /> : currentPage === 2.1 ? <CreateUserComponent /> : currentPage == 2.2 ? <UpdateAndViewUser user={user} /> : <ActivitiesTrack /> 
                     }
                 </div>
             </div>

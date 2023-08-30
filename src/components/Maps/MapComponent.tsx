@@ -12,6 +12,10 @@ interface MapComponentState {
   pins: { lat: number; lng: number; title: string; type : string }[];
 }
 
+type Window = typeof window & {
+  google: any; // You can refine this type if you have specific types for the 'google' namespace
+}
+
 class MapComponent extends React.Component<MapComponentProps, MapComponentState> {
   constructor(props: MapComponentProps) {
     super(props);
@@ -64,7 +68,7 @@ class MapComponent extends React.Component<MapComponentProps, MapComponentState>
             title={pin.title}
             icon={{
               url: iconMappings[pin.type], // Use the icon based on the type
-              scaledSize: new window.google.maps.Size(40, 40), // Adjust size as needed
+              scaledSize : new (window.google.maps.Size as any)(40, 40) , // Adjust size as needed
             }}
           />
         ))}

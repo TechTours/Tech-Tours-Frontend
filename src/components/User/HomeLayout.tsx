@@ -1,6 +1,6 @@
 // import { IProvidedProps } from 'google-maps-react';
 import React, { ComponentType, ReactElement } from 'react';
-import MapComponent from './MapComponent';
+import MapComponent from '../Maps/MapComponent';
 import {BiUserCircle} from 'react-icons/bi'
 // import { Map, GoogleApiWrapper, IMapProps ,  } from 'google-maps-react';
 
