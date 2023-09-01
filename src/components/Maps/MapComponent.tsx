@@ -21,7 +21,14 @@ class MapComponent extends React.Component<{}, MapComponentState> {
     this.state = {
       pins: [
         { lat: -1.821117070534592, lng: 30.706783777721494, title: 'Akagera', type: 'type1' },
-        // Add more pins as needed
+        { lat: -1.821117070534592, lng: 30.706783777721494, title: 'Akagera'  , type: 'type1'  },
+        { lat: -1.8145539869623148, lng: 30.710066971782197, title: 'Akagera' , type : 'type2' },
+        { lat: -1.9020597758447721, lng: 30.69583979751915, title: 'Akagera' , type : 'type3' },
+        { lat: -1.9294044343094023, lng: 30.70120671841402, title: 'Akagera' , type : 'type1' },
+        {lat: -1.7213614991712078 , lng : 30.696347817252708 , title: 'Akagera' , type : 'type2' },
+        {lat: -1.7513136776170033 , lng : 30.708573964829238 , title: 'Akagera' , type : 'type3' },
+        {lat: -1.825567686106359 , lng : 30.71863409622777 , title: 'Akagera' , type : 'type1' },
+        {lat: -1.843656 , lng : 30.732354 , title: 'Akagera' , type : 'type2' },
       ],
     };
   }
@@ -45,23 +52,43 @@ class MapComponent extends React.Component<{}, MapComponentState> {
 
     this.state.pins.forEach((pin, index) => {
       const marker = new mapboxgl.Marker({
-        element: this.createCustomMarker(pin.type, iconMappings[pin.type]),
+        element: this.createCustomMarker(pin.type, iconMappings[pin.type], pin),
       })
         .setLngLat([pin.lng, pin.lat])
         .addTo(this.map!);
     });
   }
 
-  createCustomMarker(type: string, iconUrl: string): HTMLDivElement {
+  createCustomMarker(type: string, iconUrl: string, pin: any): HTMLDivElement {
     const markerElement = document.createElement('div');
-    markerElement.className = 'custom-marker';
-    markerElement.style.backgroundImage = `url(${iconUrl})`;
-    markerElement.style.width = '40px';
-    markerElement.style.height = '40px';
-
+    markerElement.className = 'flex items-center gap-2 p-1 rounded-md w-fit text-sm bg-white/60'; // Adjust size here
+  
+    const iconElement = document.createElement('img');
+    iconElement.src = iconUrl;
+    iconElement.style.width = '30px'; // Adjust size here
+    iconElement.style.height = '30px'; // Adjust size here
+  
+    const textContainer = document.createElement('div');
+    textContainer.style.display = 'flex';
+    textContainer.style.flexDirection = 'column';
+  
+    const titleElement = document.createElement('h1');
+    titleElement.className = 'font-bold text-xs'; // Adjust size here
+    titleElement.textContent = 'Location';
+  
+    const coordinatesElement = document.createElement('p');
+    coordinatesElement.className = 'text-xs'; // Adjust size here
+    coordinatesElement.textContent = `Lat : ${pin.lat} ,Long : ${pin.lng}`;
+  
+    textContainer.appendChild(titleElement);
+    textContainer.appendChild(coordinatesElement);
+  
+    markerElement.appendChild(iconElement);
+    markerElement.appendChild(textContainer);
+  
     return markerElement;
   }
-
+  
   render() {
     return (
       <div ref={this.mapContainer} className='w-full h-screen'></div>
