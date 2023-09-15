@@ -132,9 +132,9 @@ const ActivitiesTable = () => {
                 <td className="py-2 px-4 text-center">
         <div className="flex items-center justify-center">
          {
-           !activity.isValid ?  (<div className="appearance-none w-21 bg-[#ec55273f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
+           !activity.isValid ?  (<div className="appearance-none w-21 bg-[#ec55273f]  py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#ff0000] font-semi-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
            Invalid
-         </div>) :  (<div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
+         </div>) :  (<div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-semi-bold focus:bg-[#8ebcac3f] focus:border-gray-500">
             Valid
           </div>)
          }
@@ -151,14 +151,14 @@ const ActivitiesTable = () => {
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 1}
-          className="bg-green-900 hover:cursor-pointer text-white font-bold py-1 px-4 rounded"
+          className="bg-green-900 hover:cursor-pointer text-white font-semi-bold py-1 px-4 rounded"
         >
           Prev
         </button>
         <button
           onClick={handleNextPage}
           disabled={currentActivities.length < itemsPerPage}
-          className="bg-green-900 hover:cursor-pointer text-white font-bold py-1 px-4 rounded"
+          className="bg-green-900 hover:cursor-pointer text-white font-semi-bold py-1 px-4 rounded"
         >
           Next
         </button>

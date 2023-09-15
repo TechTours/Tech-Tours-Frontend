@@ -73,11 +73,11 @@ class MapComponent extends React.Component<{}, MapComponentState> {
     textContainer.style.flexDirection = 'column';
   
     const titleElement = document.createElement('h1');
-    titleElement.className = 'font-bold text-xs'; // Adjust size here
+    titleElement.className = 'font-bold text-xs text-[#22543de5]'; // Adjust size here
     titleElement.textContent = 'Location';
   
     const coordinatesElement = document.createElement('p');
-    coordinatesElement.className = 'text-xs'; // Adjust size here
+    coordinatesElement.className = 'text-xs text-black'; // Adjust size here
     coordinatesElement.textContent = `Lat : ${pin.lat} ,Long : ${pin.lng}`;
   
     textContainer.appendChild(titleElement);

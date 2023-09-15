@@ -1,4 +1,4 @@
-import AdminHeader from "../components/Admin/AdminHeader";
+    import UserDashboardHeader from "../components/Admin/UserDashboardHeader";
 import { useNavigate  } from "react-router-dom";
 import logo from "../images/logo.png"
 import Footer from "../components/UI/Footer";
@@ -7,17 +7,17 @@ const UserDashboard = () => {
     const navigate = useNavigate();
     const linkStyle = "bg-[#22543de5]  text-white font-bold px-10 hover:bg-white border-2 border-[#22543de5] hover:text-[#22543de5]"
     return ( 
-        <div className="w-[100%] h-[120vh] flex flex-col justify-center items-center">
-            <div className="w-[100%] h-[10%] flex flex-col justify-center items-center  ">
-                <AdminHeader />
+        <div className="bg-white w-[100%] h-[120vh] flex flex-col justify-center items-center ">
+            <div className="">
+                <UserDashboardHeader />
             </div>
             <div className="w-[100%] h-[90%] flex flex-col justify-center items-center">
                 <div className="my-3  flex flex-col justify-center items-center">
-                    <div>
+                    {/* <div>
                         <img src={logo} alt="" />
-                    </div>
-                    <h1 className="font-bold">User Dashboard</h1>
-                    <h2 className="text-xl font-bold text-center mb-10">User Important Links</h2>
+                    </div> */}
+                    <h1 className="text-[#22543de5] font-bold">User Dashboard</h1>
+                    <h2 className="text-black text-xl font-bold text-center mb-10">Important Links</h2>
                 </div>
                 <div className="flex flex-row space-x-5">
                 <div>

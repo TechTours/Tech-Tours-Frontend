@@ -2,6 +2,8 @@ import {BiUserCircle} from 'react-icons/bi'
 import {AiOutlineSearch} from 'react-icons/ai'
 import { useEffect, useState } from 'react'
 import Toastify from 'toastify-js';
+import logo from '../../images/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const [profile , setProfile] = useState(false)
@@ -48,31 +50,38 @@ const Header = () => {
         getUser()
     } , [])
 
+    const navigate = useNavigate()
+
     return ( 
         <div className=" w-[100vw] h-[100%] flex item-center justify-center ">
             <div className="w-[92%] flex flex-row font-bold text-xl items-center border-b-2 border-gray-300 justify-between">
-                <div className='text-[#22543D]'>Welcome Back, {user.userName}</div>
+                {/* <div className='text-[#22543D]'>Welcome Back, {user.userName}</div> */}
+                <div> 
+                        <img src={logo} className='h-20 cursor-pointer' alt="" onClick={()=>{
+                          navigate(('user/dashboard'))
+                        }} />
+                  </div>
                 <div className="flex ">
                 <div className='h-[100%] p-2 flex justify-center items-center text-2xl text-gray-400 font-light'><AiOutlineSearch /></div>
                     <div className='h-[100%] p-2 flex justify-center items-center text-2xl text-gray-400 font-extralight'><BiUserCircle className='cursor-pointer' onClick={showOrHideProfile}/></div>
-                </div>
+                </div> 
             </div>
             {profile ? <div className="bg-white w-[40vh] absolute right-[3%] top-[8%] shadow-md rounded-md p-4">
-      <h3 className="text-xl font-semibold mb-3 text-black">User Details: {user.userName}</h3>
-      <div className="mb-2">
-        <span className=" font-semibold text-black">Email:</span> {user.email}
+      <h3 className="text-xl font-semibold text-black mb-3">User Details: {user.userName}</h3>
+      <div className="mb-2 text-black">
+        <span className="text-gray-800 font-semibold">Email:</span> {user.email}
       </div>
-      <div className="mb-2">
-        <span className=" font-semibold text-black">Username:</span> {user.userName}
+      <div className="mb-2 text-black">
+        <span className="text-gray-800 font-semibold">Username:</span> {user.userName}
       </div>
-      <div className="mb-2">
-        <span className=" font-semibold text-black">Active:</span> {user.isActive ? 'Yes' : 'No'}
+      <div className="mb-2 text-black">
+        <span className="text-gray-800 font-semibold">Active:</span> {user.isActive ? 'Yes' : 'No'}
       </div>
-      <div className="mb-2">
-        <span className=" font-semibold text-black">Admin:</span> {user.isAdmin ? 'Yes' : 'No'}
+      <div className="mb-2 text-black">
+        <span className="text-gray-800 font-semibold">Admin:</span> {user.isAdmin ? 'Yes' : 'No'}
       </div>
-      <div className="mb-4">
-        <span className=" font-semibold text-black">Tel:</span> {user.tel}
+      <div className="mb-4 text-black">
+        <span className="text-gray-800 font-semibold">Tel:</span> {user.tel}
       </div>
       <button
         onClick={handleLogout}

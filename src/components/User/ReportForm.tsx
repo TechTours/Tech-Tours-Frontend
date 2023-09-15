@@ -132,13 +132,13 @@ const ReportForm = (props: Props) => {
   return (
     <div>
       <div className="text-[#22543D] font-bold text-xl text-center w-[100%]">
-        <h2>REPORT SIGHTING</h2>
+        <h2>Report Sighting</h2>
       </div>
       <div className="flex flex-col w-[100%] justify-center items-center">
         <form onSubmit={handleSubmit} className="p-5 flex flex-col bg-slate-200 rounded-md w-[85%] mt-8">
           <div className="p-5 flex flex-col bg-slate-200 rounded-md w-[85%] mt-8">
             <label className="text-md font-bold text-[#22543d]" htmlFor="currentLocation">
-              CURRENT LOCATION:
+              Current Location:
             </label>
             <input
               className="bg-white text-black pl-2 text-sm p-2 rounded-md mt-2 shadow-md"
@@ -154,7 +154,7 @@ const ReportForm = (props: Props) => {
 
           <div className="p-5 flex flex-col bg-slate-200 rounded-md w-[85%] mt-8">
             <label className="text-md font-bold text-[#22543d]" htmlFor="sighting">
-              ADD SIGHTING:
+              Add Sighting:
             </label>
             <select
               className={`bg-white text-black pl-2 text-sm p-2 rounded-md mt-2 shadow-md ${
@@ -178,7 +178,7 @@ const ReportForm = (props: Props) => {
 
           <div className="p-5 flex flex-col bg-slate-200 rounded-md w-[85%] mt-8">
             <label className="text-md font-bold text-[#22543d]" htmlFor="time">
-              TIME:
+              Time:
             </label>
             <select
               className={`bg-white text-black pl-2 text-sm p-2 rounded-md mt-2 shadow-md ${

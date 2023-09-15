@@ -1,5 +1,5 @@
 import Footer from "../components/UI/Footer";
-import Header from "../components/User/Header";
+import UserDashboardHeader from "../components/Admin/UserDashboardHeader";
 import SideNumbers from '../components/User/SideNumbers';
 import ReportForm from '../components/User/ReportForm';
 import { useState } from 'react';
@@ -24,7 +24,7 @@ const Report: React.FC = (props) => {
         <div className="w-[100%] flex flex-col items-center overflow-hidden bg-white">
             {!isPopUp ? "" : <SuccessReport/>}
         <div>
-            <Header />
+            <UserDashboardHeader />
         </div>
         <div className='flex lg:flex-row w-[92%] mt-3 msm:flex-col'>
             <div className='flex w-[20%] justify-center items-center'>
