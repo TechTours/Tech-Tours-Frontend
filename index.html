@@ -3,14 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./src/styles/animations.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <style>
+      @keyframes pulse-opacity {
+        0% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.5;
+        }
+      }
+      
+      .animate-pulse-opacity {
+        margin-top: 1rem; /* Equivalent to mt-4 */
+        font-size: 1.25rem; /* Equivalent to text-xl */
+        font-weight: bold; /* Equivalent to font-bold */
+        color: #22543D; 
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+    
+    /* CSS for CustomLoader */
+    .loader-container {
+      background-color: #f0f0f0; /* Background color */
+      padding: 20px; /* Add some padding */
+      border-radius: 8px; /* Rounded corners */
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Box shadow for a card-like effect */
+      height: 100vh; /* Equivalent to h-screen */
+      display: flex; /* Equivalent to flex */
+      flex-direction: column; /* Equivalent to flex-col */
+      justify-content: center; /* Equivalent to justify-center */
+      align-items: center; /* Equivalent to items-center */
+    }
+    
+    .loader-logo {
+      animation: bounce 1s ease-in-out infinite; /* Apply the bouncing animation */
+    }
+
+    
+    /* Define the bouncing animation */
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0); /* Start and end position */
+      }
+      50% {
+        transform: translateY(-40px); /* Bounce up by 10 pixels */
+      }
+    }
+    </style>
   </head>
   <body>
-    <div id="root" style="
-    overflow: hidden;
-"></div>
+    <div id="loader" class="h-screen flex flex-col justify-center items-center loader-container">
+      <img
+        src="/./src/images/logo.png"
+        class="animate-spin-slow loader-logo"
+        alt="logo"
+      />
+      <p class="animate-pulse-opacity">Loading...</p>
+    </div>
+    <div id="root" style="display: none;"> <!-- Initially hide the root content -->
+      <!-- Your root component content here -->
+    </div>
+
+    <script>
+      // Function to hide the loader and show the root content when everything is loaded
+      function handleLoad() {
+        const loader = document.getElementById('loader');
+        const root = document.getElementById('root');
+        loader.style.display = 'none'; // Hide the loader
+        root.style.display = 'block'; // Show the root content
+      }
+
+      // Attach the handleLoad function to the window.onload event
+      window.onload = handleLoad;
+    </script>
+
     <script type="module" src="/src/main.tsx"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmoxx67c0gJ4yQdhApl34daTcVvJ-iyEc"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmoxx67c0gJ4yQdhAijt34daTcVvJ-iyEc"></script>
   </body>
 </html>

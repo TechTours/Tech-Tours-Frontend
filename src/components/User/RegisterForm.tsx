@@ -3,10 +3,13 @@ import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
+import { BallTriangle } from 'react-loader-spinner';
+import "../../styles/animations.css"
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
 
 const RegisterForm: React.FC = () => {
+  const [isLoading , SetIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [adminId, setAdminId] = useState('');
@@ -118,6 +121,19 @@ const RegisterForm: React.FC = () => {
     setPhoneNumber('');
     setErrors({});
   };
+
+  if(isLoading){
+    return (
+      <div className="w-[100%] h-[100%] bg-[#E5E5E5] flex flex-col justify-center items-center">
+        <BallTriangle
+        color='#22543D'
+        />
+     <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+  User Registration is in progress
+</p>
+        </div>
+    )
+  }
 
   return (
     <div className='w-[100%] h-[100%] bg-[#E5E5E5] flex flex-col justify-center items-center'>
