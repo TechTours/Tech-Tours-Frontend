@@ -3,12 +3,14 @@ import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
+import {AiOutlineEyeInvisible , AiOutlineEye} from 'react-icons/ai';
 
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [showPassword , setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,16 +31,11 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    // Form is valid, proceed with form submission
-    // Replace the console.log statement with your submission logic
-    console.log('Form submitted!');
-    console.log('Email:', email);
-    console.log('Password:', password);
 
-    axios.post(`${BASE_URL}/user/login`, { email, password }).then((res) => {
+    axios.post(`${BASE_URL}/users/login`, { email, password }).then((res) => {
       Toastify({
         text: "SuccessFully Logged In",
-        duration: 3000,
+        duration: 2000,
         gravity: "top",
         position: "left",
         backgroundColor: "#22543D",
@@ -98,6 +95,7 @@ const LoginForm: React.FC = () => {
                 }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder='Enter your email address'
               />
               {errors.email && <p className="text-red-500">{errors.email}</p>}
             </div>
@@ -106,15 +104,30 @@ const LoginForm: React.FC = () => {
               <label className="text-black" htmlFor="password">
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${
-                  errors.password ? 'border-red-500' : ''
-                }`}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+
+              <div className="relative w-full">
+  <input
+    type={showPassword ? 'text' : 'password'}
+    id="password"
+    className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 pr-10 text-base overflow-hidden text-black ${
+      errors.password ? 'border-red-500' : ''
+    }`}
+    style={{ textOverflow: 'ellipsis' }}
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+  <span
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-[10%] top-0 flex justify-center items-center  w-10 h-10  cursor-pointer"
+  >
+    {showPassword ? (
+      <AiOutlineEyeInvisible />
+    ) : (
+      <AiOutlineEye />
+    )}
+  </span>
+</div>
+
               {errors.password && <p className="text-red-500">{errors.password}</p>}
             </div>
 
