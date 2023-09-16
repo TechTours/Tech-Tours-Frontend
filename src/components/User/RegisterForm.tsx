@@ -17,6 +17,8 @@ const RegisterForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [gender , setGender] = useState('');
+  const [fullname, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [errors, setErrors] = useState<{
     adminId?: string;
@@ -25,9 +27,12 @@ const RegisterForm: React.FC = () => {
     confirmPassword?: string;
     email?: string;
     phoneNumber?: string;
+    fullname?: string;
+    gender ?: string;
   }>({});
 
   const handleSubmit = (e: React.FormEvent) => {
+    SetIsLoading(true)
     e.preventDefault();
 
     // Validate the form fields
@@ -38,6 +43,8 @@ const RegisterForm: React.FC = () => {
       confirmPassword?: string;
       email?: string;
       phoneNumber?: string;
+      fullname?: string;
+      gender ?: string;
     } = {};
 
     if (!adminId) {
@@ -46,6 +53,14 @@ const RegisterForm: React.FC = () => {
 
     if (!username) {
       validationErrors.username = 'Username is required';
+    }
+
+    if(!gender){
+      validationErrors.gender = 'Gender is required'
+    }
+
+    if(!fullname){
+      validationErrors.fullname = 'Full name is required';
     }
 
     if (!password) {
@@ -73,33 +88,66 @@ const RegisterForm: React.FC = () => {
 
     // Form is valid, proceed with form submission
     // Replace the console.log statement with your submission logic
-    console.log('Form submitted!');
-    console.log('Admin ID:', adminId);
-    console.log('Username:', username);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
-    console.log('Email:', email);
-    console.log('Phone Number:', phoneNumber);
     const isAdmin = true;
-    const fullName = username;
+    const fullName = fullname;
 
-    axios.post(`${BASE_URL}/user/admin/enroll`, {
-      userName: username,
-      fullName,
-      email,
+    const body = {
+      username , 
       password,
-      code: adminId,
-      tel: phoneNumber,
+      gender,
+      email,
+      fullName,
+      tel : phoneNumber,
+      adminKey : adminId,
       isAdmin
-    }).then((res) => {
-      console.log(res);
-      Toastify({
-        text: "SuccessFully Registered",
-        duration: 3000,
-        gravity: "top",
-        position: "left",
-        backgroundColor: "#22543D"
-      }).showToast();
+    }
+
+    axios.post(`${BASE_URL}/users/admin/create`, body).then((res) => {
+      console.log(res.data);
+      if(res.data.status === 201){
+        SetIsLoading(false)
+        Toastify({
+          text: "SuccessFully Registered Check Email for Verification",
+          duration: 3000,
+          gravity: "top",
+          position: "left",
+          backgroundColor: "#22543D"
+        }).showToast();
+      }
+
+      if(res.data.status === 400){
+        SetIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "left",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
+      if(res.data.status === 500){
+        SetIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "left",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
+      if(res.data.status === 404){
+        SetIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "left",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
     })
       .catch((err) => {
         console.log(err);
@@ -157,6 +205,20 @@ const RegisterForm: React.FC = () => {
               {errors.adminId && <p className="text-red-500">{errors.adminId}</p>}   </div>
 
             <div className='w-[100%] flex flex-col mb-5'>
+              <label className='text-black' htmlFor="Configuration ID">FullName</label>
+              <input
+                type="text"
+                id="fullname"
+                className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.fullname ? 'border-red-500' : ''
+                  }`}
+                value={fullname}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+              {errors.fullname && <p className="text-red-500">{errors.fullname}</p>}  </div>
+
+              {/* The full name input start  */}
+              
+            <div className='w-[100%] flex flex-col mb-5'>
               <label className='text-black' htmlFor="Configuration ID">Username</label>
               <input
                 type="text"
@@ -167,6 +229,8 @@ const RegisterForm: React.FC = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
               {errors.username && <p className="text-red-500">{errors.username}</p>}  </div>
+
+               {/* The full name inpiut end   */}
 
             <div className='w-[100%] flex flex-col mb-5'>
               <label className='text-black' htmlFor="Configuration ID">Password</label>
@@ -194,10 +258,53 @@ const RegisterForm: React.FC = () => {
               </div>
               {errors.password && <p className="text-red-500">{errors.password}</p>}  </div>
 
-
           </div>
           <div className=' w-[50%] flex flex-col justify-center items-center'>
+          
+
             <div className='w-[100%] flex flex-col mb-5'>
+              <label className='text-black' htmlFor="Configuration ID">Email</label>
+              <input
+                type="text"
+                id="email"
+                className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.email ? 'border-red-500' : ''
+                  }`}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {errors.email && <p className="text-red-500">{errors.email}</p>} </div>
+
+              {/* the gender input start  */}
+              <div className='w-[100%] flex flex-col mb-5'>
+              <label className='text-black' htmlFor="Configuration ID">Gender</label>
+              <select
+                id="gender"
+                className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.gender ? 'border-red-500' : ''
+                  }`}
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+              <option>Select Gender</option>
+              <option value={"male"}>Male</option>
+              <option value={"female"}>Female</option>
+              </select>
+              {errors.gender && <p className="text-red-500">{errors.gender}</p>} </div>
+              {/* the gender input end  */}
+             
+
+            <div className='w-[100%] flex flex-col mb-5'>
+              <label className='text-black' htmlFor="Configuration ID">Contacts (Phone number)</label>
+              <input
+                type="text"
+                id="phoneNumber"
+                className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.phoneNumber ? 'border-red-500' : ''
+                  }`}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+              {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}  </div>
+
+              <div className='w-[100%] flex flex-col mb-5'>
               <label className='text-black' htmlFor="Configuration ID">Confirm Password</label>
               <div className="relative w-full">
                 <input
@@ -222,29 +329,6 @@ const RegisterForm: React.FC = () => {
               </div>
               {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>} </div>
 
-            <div className='w-[100%] flex flex-col mb-5'>
-              <label className='text-black' htmlFor="Configuration ID">Email</label>
-              <input
-                type="text"
-                id="email"
-                className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.email ? 'border-red-500' : ''
-                  }`}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {errors.email && <p className="text-red-500">{errors.email}</p>} </div>
-
-            <div className='w-[100%] flex flex-col mb-5'>
-              <label className='text-black' htmlFor="Configuration ID">Contacts (Phone number)</label>
-              <input
-                type="text"
-                id="phoneNumber"
-                className={`border-2xl w-[90%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.phoneNumber ? 'border-red-500' : ''
-                  }`}
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
-              {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}  </div>
 
           </div>
         </div>
