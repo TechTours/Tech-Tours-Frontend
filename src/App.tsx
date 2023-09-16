@@ -18,6 +18,7 @@ import AdminActivitiesDash from './pages/AdminActivityDash';
 import AdminCreateUser from './pages/AdminCreateUser';
 import AdminUpdateAndView from './pages/AdminUpdateAndView';
 import LoderComponent from './components/Loaders/LoaderComponent';
+import EmailVerification from './pages/EmailVerification';
 
 const App = () => {
   function AuthenticatedRoutes() {
@@ -65,6 +66,7 @@ const App = () => {
           <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/unauthorized" element={<UnAuthorized />} />
           <Route path="/notfound" element={<NotFound />} />
+          <Route path='/verify'  element={<EmailVerification />}/>
           <Route path='/loader' element={<LoderComponent />} />
         </Routes>
       </Router>
