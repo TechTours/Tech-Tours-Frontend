@@ -4,6 +4,11 @@ import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 import {AiOutlineEyeInvisible , AiOutlineEye} from 'react-icons/ai';
+import { BallTriangle } from 'react-loader-spinner';
+import "../../styles/animations.css"
+import { getUserDetails } from '../../utils/getUserDetails';
+import {User} from "../../types/user"
+
 
 
 const LoginForm: React.FC = () => {
@@ -11,8 +16,9 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [showPassword , setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validate the form fields
@@ -31,35 +37,59 @@ const LoginForm: React.FC = () => {
       return;
     }
 
+    setIsLoading(true);
 
-    axios.post(`${BASE_URL}/users/login`, { email, password }).then((res) => {
+    axios.post(`${BASE_URL}/users/login`, { email, password }).then(async (res) => {
+      const data = res.data;
+      if(data.access_token === undefined || data.access_token === null || !data.access_token){
+        setIsLoading(false);
+        Toastify({
+          text: data.message,
+          duration: 4000,
+          gravity: "top",
+          position: "left",
+          backgroundColor: "#ec55273f"
+        }).showToast();
+      }else{
+      const user : User | null = await getUserDetails(email , data.access_token);
+      if(user === null){
+        setIsLoading(false);
+        Toastify({
+          text: "Invalid Email",
+          duration: 4000,
+          gravity: "top",
+          position: "left",
+          backgroundColor: "#ec55273f"
+        }).showToast();
+      }
+      setIsLoading(false);
       Toastify({
         text: "SuccessFully Logged In",
-        duration: 2000,
+        duration: 1000,
         gravity: "top",
         position: "left",
         backgroundColor: "#22543D",
         callback: function () {
-          localStorage.setItem("user", JSON.stringify(res.data.data));
-          localStorage.setItem("isAdmin", res.data.data.isAdmin);
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("isAdmin", JSON.stringify(user?.isAdmin));
+          localStorage.setItem("token", data.access_token);
           
-          if(res.data.data.isAdmin === true){
+          if(user?.isAdmin === true){
             window.location.href = "/admin/dashboard";
           }else{
             window.location.href = "/user/dashboard";
           } 
         }
       }).showToast();
+    }
       //redirecting to dashboard
 
-      
     }
     ).catch((err) => {
-      console.log(err);
+      setIsLoading(false);
       Toastify({
-        text: err.response.data.message,
-        duration: 3000,
+        text: "Login Failed Please Try Again",
+        duration: 4000,
         gravity: "top",
         position: "left",
         backgroundColor: "#ec55273f"
@@ -67,12 +97,24 @@ const LoginForm: React.FC = () => {
     }
     );
 
-
     // Reset the form state
     setEmail('');
     setPassword('');
     setErrors({});
   };
+
+  if(isLoading){
+    return (
+      <div className="w-[100%] h-[100%] bg-[#E5E5E5] flex flex-col justify-center items-center">
+        <BallTriangle
+        color='#22543D'
+        />
+     <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+  Login is in progress
+</p>
+        </div>
+    )
+  }
 
   return (
     <div className="w-[100%] h-[100%] bg-[#E5E5E5] flex flex-col justify-center items-center">
@@ -114,6 +156,7 @@ const LoginForm: React.FC = () => {
     }`}
     style={{ textOverflow: 'ellipsis' }}
     value={password}
+    placeholder='Enter your password'
     onChange={(e) => setPassword(e.target.value)}
   />
   <span
