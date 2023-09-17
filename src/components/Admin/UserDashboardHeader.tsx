@@ -53,12 +53,12 @@ const Header = () => {
     const navigate = useNavigate()
 
     return ( 
-        <div className=" w-[100vw] h-[100%] flex item-center justify-center ">
+        <div className=" w-[95vw] h-[100%] flex item-center justify-center ">
             <div className="w-[92%] flex flex-row font-bold text-xl items-center border-b-2 border-gray-300 justify-between">
                 {/* <div className='text-[#22543D]'>Welcome Back, {user.userName}</div> */}
                 <div> 
                         <img src={logo} className='h-20 cursor-pointer' alt="" onClick={()=>{
-                          navigate(('user/dashboard'))
+                          navigate(('/user/dashboard'))
                         }} />
                   </div>
                 <div className="flex ">

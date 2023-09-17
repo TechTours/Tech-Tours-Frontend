@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
+import { BallTriangle } from 'react-loader-spinner';
 import 'toastify-js/src/toastify.css';
 import { useNavigate , useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 type props = {
   user : any
@@ -13,14 +15,17 @@ const UpdateUserAndView = (props : props) => {
   const navigate = useNavigate();
    const user = props.user;
   const [isActive, setIsActive] = useState(user.isActive);
-  const [username, setUsername] = useState(user.userName);
+  const [isLoading, setIsLoading] = useState(false);
+  const [username, setUsername] = useState(user.username);
   const [isAdmin, setIsAdmin] = useState(user.isAdmin);
+  const [gender , setGender] = useState('')
+  const [fullname , setFullName] = useState(user.fullname)
   const [email, setEmail] = useState(user.email);
   const [phoneNumber, setPhoneNumber] = useState(user.tel);
-  const [errors, setErrors] = useState<{ isActive?: string; username?: string; isAdmin?: string; email?: string; phoneNumber?: string }>(
+  const [errors, setErrors] = useState<{ isActive?: string; username?: string; isAdmin?: string; email?: string; phoneNumber?: string; fullname?: string; gender?: string }>(
     {}
   );
-  
+
 
   const backToUsers = ()=>{
     navigate("/admin/users")
@@ -28,6 +33,8 @@ const UpdateUserAndView = (props : props) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // setIsLoading(true);
+
 
     // Validate the form fields
     const validationErrors: {
@@ -36,6 +43,8 @@ const UpdateUserAndView = (props : props) => {
       password?: string;
       email?: string;
       phoneNumber?: string;
+      gender?: string;
+      fullname?: string;
     } = {};
 
     if (!isActive && ( isActive === 'false' || isActive === 'true')) {
@@ -54,6 +63,14 @@ const UpdateUserAndView = (props : props) => {
       validationErrors.email = 'Email is required';
     }
 
+    if(!fullname){
+      validationErrors.fullname = 'FullName is required';
+    }
+
+    if(!gender){
+      validationErrors.gender = 'Gender is required'
+    }
+
     if (!phoneNumber) {
       validationErrors.phoneNumber = 'Phone Number is required';
     }
@@ -63,37 +80,81 @@ const UpdateUserAndView = (props : props) => {
       return;
     }
 
+    setIsLoading(true);
+
     // Form is valid, proceed with form submission
+
+    console.log("This is the money")
 
     const token = localStorage.getItem("token");
     const headers = {
-      token : token
+      Authorization : `Bearer ${token}`
   }
 
-    axios.put(`${BASE_URL}/user/update/${user._id}`, { 
-      userName:  username , 
-      fullName : username ,
-       email ,
-        isActive , 
-        tel : phoneNumber ,
-         isAdmin ,
-         code : 'techtours19'
-     } , {headers : headers} ).then((res) => {
-         console.log(res);
-         Toastify({
-           text: `SuccessFully Updated User ${username}`,
-           duration: 1000,
-           gravity: "top",
-           position: "right",
-           backgroundColor: "green",
-           callback: function () {
-              navigate("/admin/users")
-            }
-         }).showToast();
-          backToUsers()
+
+  const body = {
+    username,
+    gender,
+    email,
+    fullName : fullname,
+     tel : phoneNumber,
+     isAdmin 
+ }
+
+ console.log(`${BASE_URL}/users/update/${user.id}`);
+ 
+    axios.patch(`${BASE_URL}/users/update/${user.id}`, body , {headers : headers} ).then((res) => {
+      console.log(res.data);
+      if(res.data.status === 200){
+        setIsLoading(false)
+        Toastify({
+          text: "SuccessFully Registered Check Email for Verification",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#22543D"
+        }).showToast();
+        navigate('/admin/users')
+      }
+
+      if(res.data.status === 400){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+        backToUsers()
+      }
+
+      if(res.data.status === 500){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
+      if(res.data.status === 404){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+      
       })
        .catch((err) => {
          console.log(err);
+         setIsLoading(false)
          Toastify({
            text: err.response.data.error,
            duration: 3000,
@@ -105,11 +166,25 @@ const UpdateUserAndView = (props : props) => {
 
   };
 
+
+  if(isLoading){
+    return (
+      <div className="w-[100%] h-[100%] bg-[#F5F5F5] flex flex-col justify-center items-center">
+        <BallTriangle
+        color='#22543D'
+        />
+     <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+ The User is Updating ...
+</p>
+        </div>
+    )
+  }
+
   return (
-    <div className="w-[100%] h-[100%] flex flex-col justify-center items-start">
+    <div className="w-[100%] h-[100%] flex flex-col justify-start items-start">
       <div className="w-[100%] h-[10%] flex flex-row justify-center items-start">
         <div className="w-[92%] flex flex-row justify-between items-center">
-          <div className="p-2 font-bold text-xl text-[#22543D]">Update Or View User {user.userName}</div>
+          <div className="p-2 font-bold text-xl text-[#22543D]">Update Or View User {user.username}</div>
         </div>
       </div>
 
@@ -183,6 +258,39 @@ const UpdateUserAndView = (props : props) => {
                 />
                 {errors.email && <p className="text-red-500">{errors.email}</p>}
               </div>
+
+              <div className="w-[100%] flex flex-col mb-5 space-y-2">
+                <label className="text-black" htmlFor="fullname">
+                  FullName
+                </label>
+                <input
+                  type="fullname"
+                  id="fullname"
+                  className={`border-2xl w-[40%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${
+                    errors.fullname ? 'border-red-500' : ''
+                  }`}
+                  value={fullname}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+                {errors.fullname && <p className="text-red-500">{errors.fullname}</p>}
+              </div>
+
+                {/* the gender input start  */}
+                <div className="w-[100%] flex flex-col mb-5 space-y-2">
+              <label className='text-black' htmlFor="Configuration ID">Gender</label>
+              <select
+                id="gender"
+                className={`border-2xl w-[40%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.gender ? 'border-red-500' : ''
+                  }`}
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+              <option>Select Gender</option>
+              <option value={"male"}>Male</option>
+              <option value={"female"}>Female</option>
+              </select>
+              {errors.gender && <p className="text-red-500">{errors.gender}</p>} </div>
+              {/* the gender input end  */}
 
               <div className="w-[100%] flex flex-col mb-5 space-y-2">
                 <label className="text-black" htmlFor="phoneNumber">

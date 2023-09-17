@@ -20,13 +20,13 @@ const UserTable = () => {
       // use axios to fetch
       const token = localStorage.getItem('token');
       const headers = {
-        token: token,
+        Authorization: `Bearer ${token}`,
       };
 
       axios
-        .get(`${BASE_URL}/user/all`, { headers: headers })
+        .get(`${BASE_URL}/users/all`, { headers: headers })
         .then((res) => {
-          const allUsers = res.data.data;
+          const allUsers = res.data;
           const filteredUsers = allUsers.filter((user: any) => user.isAdmin === false);
           setUsers(filteredUsers);
           setLoading(false);
@@ -48,7 +48,6 @@ const UserTable = () => {
   const renderUpdateUser = (user : {}) => {
     if(user === undefined) return;
     if(user === null) return;
-    console.log(user);
     navigate("/admin/users/update", {state: {user: user}})
   };
 
@@ -73,7 +72,7 @@ const UserTable = () => {
             <th className="py-2 px-4 text-center">Username</th>
             <th className="py-2 px-4 text-center">Email</th>
             <th className="py-2 px-4 text-center">Phone Number</th>
-            <th className="py-2 px-4 text-center">Config ID</th>
+            <th className="py-2 px-4 text-center">Fullname</th>
             <th className="py-2 px-4 text-center">Status</th>
             <th className="py-2 px-4 text-center">Action</th>
           </tr>
@@ -103,10 +102,10 @@ const UserTable = () => {
             // Displaying paginated users
             currentUsers.map((user: any, index: number) => (
               <tr key={index} className="text-black">
-               <td className="py-2 px-4 text-center">{user.userName}</td>
+               <td className="py-2 px-4 text-center ">{user.username}</td>
                 <td className="py-2 px-4 text-center">{user.email}</td>
                 <td className="py-2 px-4 text-center">{user.tel}</td>
-                <td className="py-2 px-4 text-center">TechTours19</td>
+                <td className="py-2 px-4 text-center">{user.fullname}</td>
                 <td className="py-2 px-4 text-center">
         <div className="flex items-center justify-center">
         {user.isActive ? (  <div className="appearance-none w-21 bg-[#8ebcac3f] border border-gray-300 py-2 px-4 pr-8 rounded leading-tight focus:outline-none text-[#22543D] font-bold focus:bg-[#8ebcac3f] focus:border-gray-500">

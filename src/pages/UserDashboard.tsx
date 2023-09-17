@@ -7,7 +7,7 @@ const UserDashboard = () => {
     const navigate = useNavigate();
     const linkStyle = "bg-[#22543de5]  text-white font-bold px-10 hover:bg-white border-2 border-[#22543de5] hover:text-[#22543de5]"
     return ( 
-        <div className="bg-white w-[100%] h-[120vh] flex flex-col justify-center items-center ">
+        <div className="bg-white w-[100%] h-[120vh] flex flex-col justify-center items-center  ">
             <div className="">
                 <UserDashboardHeader />
             </div>
