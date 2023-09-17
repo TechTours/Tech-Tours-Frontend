@@ -12,7 +12,7 @@ const AdminCreateUser = () => {
             <div className="w-[100%] h-[10%]  flex flex-row justify-center items-center">
                 <AdminHeader />
             </div>
-            <div className="w-[100%] h-[90%] flex flex-row justify-center items-center ">
+            <div className="w-[100%] h-[100%] flex flex-row justify-center items-center overflow-y-scroll">
                 <CreateUserComponent />
             </div>
         </div>

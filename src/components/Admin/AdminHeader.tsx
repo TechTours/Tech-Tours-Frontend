@@ -51,7 +51,7 @@ const Header = () => {
     return ( 
         <div className=" w-[100vw] h-[100%] flex item-center justify-center ">
             <div className="w-[92%] flex flex-row font-bold text-xl items-center border-b-2 border-gray-300 justify-between">
-                <div className='text-[#22543D]'>Welcome Back, {user.userName}</div>
+                <div className='text-[#22543D]'>Welcome Back, {user.username}</div>
                 <div className="flex ">
                 <div className='h-[100%] p-2 flex justify-center items-center text-2xl text-gray-400 font-light'><AiOutlineSearch /></div>
                     <div className='h-[100%] p-2 flex justify-center items-center text-2xl text-gray-400 font-extralight'><BiUserCircle className='cursor-pointer' onClick={showOrHideProfile}/></div>
@@ -63,7 +63,7 @@ const Header = () => {
         <span className=" font-semibold text-black">Email:</span> {user.email}
       </div>
       <div className="mb-2">
-        <span className=" font-semibold text-black">Username:</span> {user.userName}
+        <span className=" font-semibold text-black">Username:</span> {user.username}
       </div>
       <div className="mb-2">
         <span className=" font-semibold text-black">Active:</span> {user.isActive ? 'Yes' : 'No'}

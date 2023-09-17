@@ -3,18 +3,29 @@ import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
+import { BallTriangle } from 'react-loader-spinner';
+import "../../styles/animations.css"
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUserComponent = () => {
   const [configurationId, setConfigurationId] = useState('techtours19');
+  const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
+  const [isLoading , setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [errors, setErrors] = useState<{ configurationId?: string; username?: string; password?: string; email?: string; phoneNumber?: string }>(
+  const [fullname, setFullname] = useState('');
+  const [gender , setGender] = useState('');
+  const [errors, setErrors] = useState<{ configurationId?: string; username?: string; password?: string; email?: string; phoneNumber?: string; fullname?:string; gender?:string }>(
     {}
   );
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent) => {
+    setIsLoading(true)
     e.preventDefault();
 
     // Validate the form fields
@@ -24,6 +35,8 @@ const CreateUserComponent = () => {
       password?: string;
       email?: string;
       phoneNumber?: string;
+      fullname?: string;
+      gender ?: string;
     } = {};
 
     if (!configurationId) {
@@ -42,6 +55,14 @@ const CreateUserComponent = () => {
       validationErrors.email = 'Email is required';
     }
 
+    if(!gender){
+      validationErrors.gender = 'Gender is required'
+    }
+
+    if(!fullname){
+      validationErrors.fullname = 'Fullname is required'
+    }
+
     if (!phoneNumber) {
       validationErrors.phoneNumber = 'Phone Number is required';
     }
@@ -51,40 +72,73 @@ const CreateUserComponent = () => {
       return;
     }
 
-    // Form is valid, proceed with form submission
-    console.log('Form submitted!');
-    console.log('Configuration ID:', configurationId);
-    console.log('Username:', username);
-    console.log('Password:', password);
-    console.log('Email:', email);
-    console.log('Phone Number:', phoneNumber);
-
     const token = localStorage.getItem("token");
-    const headers = {
-      token : token
+
+  const headers = {
+    Authorization : `Bearer ${token}`
   }
 
-    axios.post(`${BASE_URL}/user/enroll`, { 
-      userName:  username , 
-      fullName : username ,
-       email ,
-        password , 
-        tel : phoneNumber ,
-         isAdmin : false
-     } , {headers : headers} ).then((res) => {
-         console.log(res);
-         Toastify({
-           text: `SuccessFully Registered User ${username}`,
-           duration: 3000,
-           gravity: "top",
-           position: "right",
-           backgroundColor: "green"
-         }).showToast();
+  const body = {
+     username,
+     password,
+     gender,
+     email,
+     fullName : fullname,
+      tel : phoneNumber,
+      isAdmin : false
+  }
+
+    axios.post(`${BASE_URL}/users/create`, body , {headers : headers} ).then((res) => {
+      if(res.data.status === 201){
+        setIsLoading(false)
+        Toastify({
+          text: "SuccessFully Registered Check Email for Verification",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#22543D"
+        }).showToast();
+        navigate('/admin/users')
+      }
+
+      if(res.data.status === 400){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
+      if(res.data.status === 500){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
+      if(res.data.status === 404){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
       })
        .catch((err) => {
+          setIsLoading(false)
          console.log(err);
          Toastify({
-           text: err.response.data.error,
+           text: err.response.data.message,
            duration: 3000,
            gravity: "top",
            position: "right",
@@ -99,10 +153,25 @@ const CreateUserComponent = () => {
     setEmail('');
     setPhoneNumber('');
     setErrors({});
+    setGender('')
+    setFullname('')
   };
 
+  if(isLoading){
+    return (
+      <div className="w-[100%] h-[100%] bg-[#F5F5F5] flex flex-col justify-center items-center">
+        <BallTriangle
+        color='#22543D'
+        />
+     <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+  User Registration is in progress
+</p>
+        </div>
+    )
+  }
+
   return (
-    <div className="w-[100%] h-[100%] flex flex-col justify-center items-start">
+    <div className="w-[100%] h-[100%] flex flex-col justify-start items-start">
       <div className="w-[100%] h-[10%] flex flex-row justify-center items-start">
         <div className="w-[92%] flex flex-row justify-between items-center">
           <div className="p-2 font-bold text-xl text-[#22543D]">Create New User</div>
@@ -117,20 +186,19 @@ const CreateUserComponent = () => {
             <form className="w-[100%] h-[100%] flex flex-col justify-center items-start" onSubmit={handleSubmit}>
               <div className="w-[100%] flex flex-col mb-5 space-y-2">
                 <label className="text-black" htmlFor="configurationId">
-                  Configuration ID
+                  Full Name
                 </label>
                 <input
                   type="text"
-                  id="configurationId"
+                  id="fullname"
 
                   className={`border-2xl w-[40%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${
-                    errors.configurationId ? 'border-red-500' : ''
+                    errors.fullname ? 'border-red-500' : ''
                   }`}
-                  value={configurationId}
-                  readOnly
-                  onChange={(e) => setConfigurationId(e.target.value)}
+                  value={fullname}
+                  onChange={(e) => setFullname(e.target.value)}
                 />
-                {errors.configurationId && <p className="text-red-500">{errors.configurationId}</p>}
+                {errors.fullname && <p className="text-red-500">{errors.fullname}</p>}
               </div>
 
               <div className="w-[100%] flex flex-col mb-5 space-y-2">
@@ -149,21 +217,31 @@ const CreateUserComponent = () => {
                 {errors.username && <p className="text-red-500">{errors.username}</p>}
               </div>
 
-              <div className="w-[100%] flex flex-col mb-5 space-y-2">
-                <label className="text-black" htmlFor="password">
-                  Password
-                </label>
+              <div className='w-[100%] flex flex-col mb-5'>
+              <label className='text-black' htmlFor="Configuration ID">Password</label>
+
+              <div className="relative w-[40%] ">
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
-                  className={`border-2xl w-[40%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${
-                    errors.password ? 'border-red-500' : ''
-                  }`}
+                  className={`border-2xl w-[100%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.password ? 'border-red-500' : ''
+                    }`}
+                  style={{ textOverflow: 'ellipsis' }}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {errors.password && <p className="text-red-500">{errors.password}</p>}
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-0  top-0 flex justify-center items-center  w-10 h-10  cursor-pointer"
+                >
+                  {showPassword ? (
+                    <AiOutlineEyeInvisible />
+                  ) : (
+                    <AiOutlineEye />
+                  )}
+                </span>
               </div>
+              {errors.password && <p className="text-red-500">{errors.password}</p>}  </div>
 
               <div className="w-[100%] flex flex-col mb-5 space-y-2">
                 <label className="text-black" htmlFor="email">
@@ -196,6 +274,23 @@ const CreateUserComponent = () => {
                 />
                 {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}
               </div>
+
+               {/* the gender input start  */}
+               <div className="w-[100%] flex flex-col mb-5 space-y-2">
+              <label className='text-black' htmlFor="Configuration ID">Gender</label>
+              <select
+                id="gender"
+                className={`border-2xl w-[40%] h-10 rounded-md border-2 border-gray-300 bg-white pl-2 text-black ${errors.gender ? 'border-red-500' : ''
+                  }`}
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+              <option>Select Gender</option>
+              <option value={"male"}>Male</option>
+              <option value={"female"}>Female</option>
+              </select>
+              {errors.gender && <p className="text-red-500">{errors.gender}</p>} </div>
+              {/* the gender input end  */}
 
               <div className="w-[40%] flex flex-row justify-between mb-5 gap-5">
                 <button className="bg-[#fffff] text-[#22543D] w-[40%] text-center font-bold border-2 border-[#22543D]">

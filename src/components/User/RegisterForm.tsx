@@ -112,6 +112,7 @@ const RegisterForm: React.FC = () => {
           gravity: "top",
           position: "left",
           backgroundColor: "#22543D"
+          
         }).showToast();
       }
 
