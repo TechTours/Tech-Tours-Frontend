@@ -1,6 +1,8 @@
 import { useState , useEffect } from "react";
 import { BASE_URL } from "../../api/apiConfig";
 import axios from "axios";
+import {BsEmojiNeutral} from 'react-icons/bs'
+import { BallTriangle } from "react-loader-spinner";
 
 const ActivitiesTable = () => {
   const [activities, setActivities] = useState<Record<string, any>[]>([]);
@@ -8,6 +10,8 @@ const ActivitiesTable = () => {
   const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Change this number to adjust items per page
+  const [isEmpty , setIsEmpty] = useState(false);
+
 
   
   // the time renderiing 
@@ -32,13 +36,14 @@ const ActivitiesTable = () => {
       // use axios to fetch
       const token = localStorage.getItem('token');
       const headers = {
-        token: token,
+        Authorization : `Bearer ${token}`,
       };
 
       axios
         .get(`${BASE_URL}/activity/all`, { headers: headers })
         .then((res) => {
-          const allActivities = res.data.data;
+          console.log(res.data);
+          const allActivities = res.data;
           const newActivities = allActivities.map((activity: any) => {
             const isValid = isTimeBeforeCurrent(new Date(activity.time));
             // Add the isValid property to the activity object
@@ -48,11 +53,14 @@ const ActivitiesTable = () => {
               isValid: isValid
             };
           });
-                    
           setActivities(newActivities);
           setLoading(false);
+          if(newActivities.length === 0){
+            setIsEmpty(true);
+          }
         })
         .catch((err) => {
+
           console.log(err);
           setError(true);
           setLoading(false);
@@ -83,6 +91,37 @@ const ActivitiesTable = () => {
 
   // pagination end
 
+  if(isEmpty){
+  return (
+    <div className="bg-[#F5F5F5] flex flex-col justify-center items-center w-[100%]  p-4">
+      <BsEmojiNeutral  className="text-[5em]"/>
+    <p className="text-2xl font-bold text-[#22543D] mt-4 ">No Activity Found</p>
+ </div>
+  )
+  }
+
+
+  if(error){
+    return (
+      <div className="bg-[#F5F5F5] flex flex-col justify-center items-center w-[100%]  p-4">
+        <BsEmojiNeutral  className="text-[5em] text-[#c76f3c]"/>
+      <p className="text-2xl font-bold text-[#c76f3c] mt-4 ">Error Fetching Activities </p>
+   </div>
+    )
+    }
+
+  if(loading){
+    return (
+      <div className="w-[100%] h-[100%] bg-[#F5F5F5] flex flex-col justify-center items-center">
+        <BallTriangle
+        color='#22543D'
+        />
+     <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+  Activity Fetching is in progress
+</p>
+        </div>
+    )
+  }
 
     return ( 
         <div className="w-[95%] pt-3">
@@ -116,7 +155,7 @@ const ActivitiesTable = () => {
                 <td></td>
                 <td></td>
                 <td className="  w-[100%] h-[100%] flex flex-col justify-center items-center p-3 font-bold text-[#ec55276c] text-xl ">
-                  Error Fetching Users
+                  Error Fetching Activities
                   </td>
                </tr>
             

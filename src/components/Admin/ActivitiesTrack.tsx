@@ -7,7 +7,7 @@ const ActivitiesTrack = () => {
             {/* the first part start  */}
                   <div className="w-[100%] h-[10%]  flex flex-row justify-center items-start ">
        <div className="w-[92%] flex flex-row justify-between items-center">
-           <div className="p-2 font-bold text-xl text-[#22543D]">Manage Users</div>
+           <div className="p-2 font-bold text-xl text-[#22543D]">Manage Activities</div>
            <div className="pt-1"> 
            <button className="text-black shadow-sm shadow-[#22543D] bg-white flex items-center justify-center gap-1" > <AiOutlineBars /> Sort By Time</button>
        </div>
