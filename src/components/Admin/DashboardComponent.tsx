@@ -182,7 +182,7 @@ User Registration is in progress
               {/* // the third-second part start */}
               <div className="w-[40%] h-[100%] flex flex-col justify-center items-start pl-2 overflow-hidden">
               <div className="w-[100%] flex flex-row justify-start items-center">
-            <div className=" text-[#22543D] flex  items-center  justify-start h-[11vh] text-xl font-bold">Recent Pending Requests</div>   
+            <div className=" text-[#22543D] flex  items-center  justify-start h-[11vh] text-xl font-bold">Recent Pending Notifications</div>   
            </div>
                <div className="bg-white w-[100%] h-[59vh] rounded-md overflow-y-hidden scrollbar-hidden shadow-md">
                         <NotificationAdmin />

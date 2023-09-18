@@ -3,6 +3,11 @@ import sight1 from '../../images/sight1.png'
 import sight2 from '../../images/sight2.png'
 import { useNavigate } from 'react-router-dom'
 import {AiOutlineLeftCircle} from 'react-icons/ai'
+import lion from '../../images/lion.png';
+import buffalo from '../../images/buffalo.png';
+import elephant from '../../images/elephant.png';
+import leopard from '../../images/leopard.png'
+import rhino from '../../images/rhinoceros.png'
 
 type props = {
    renderPopUp : () => void
@@ -14,11 +19,11 @@ const MapSideBar = (props : props) => {
        props.renderPopUp()
    }
     return ( 
-      <div className='absolute z-10 top-0 left-0 bg-white w-[25vw] h-[100vh] flex flex-col justify-center items-center overflow-scroll'>
-      <div className="w-[100%] flex flex-col justify-center items-center"> 
+      <div className='absolute z-10 top-0 left-0 py-5 bg-white w-[25vw] h-[100vh] flex flex-col justify-start items-center overflow-y-scroll'>
+      <div className="w-[100%] flex flex-col justify-center items-center "> 
  {/* the div that will contain the logo  */}
   <div className='w-[100%] flex justify-start pl-2 items-center '>
-    <div className='w-[70%] pt-20'>
+    <div className='w-[70%]'>
     <img src={logo} alt="logo" className='w-[70%] h-[80px]' />
     </div>
     </div>
@@ -31,19 +36,28 @@ const MapSideBar = (props : props) => {
 <div className='w-[100%] flex flex-col justify-center items-center mt-1'>
 <div className='w-[90%] flex flex-row justify-center items-center mt-2 space-x-2'>
 {/* // the is will contain the five animals */}
-<div className='w-[18%] bg-[#d9d9d9ea] p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>1</div>
-<div className='w-[18%] bg-[#d9d9d9ea] p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>2</div>
-<div className='w-[18%] bg-[#d9d9d9ea] p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>3</div>
-<div className='w-[18%] bg-[#d9d9d9ea] p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>4</div>
-<div className='w-[18%] bg-[#d9d9d9ea] p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>5</div>
-<div className='w-[18%] bg-[#d9d9d9ea] p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>5</div>
+<div className='w-[17%] bg-white  p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>
+  <img src={lion} alt="" />
+</div>
+<div className='w-[17%] bg-white p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>
+  <img src={buffalo} alt="" />
+</div>
+<div className='w-[17%] bg-white p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>
+  <img src={elephant} alt="" />
+</div>
+<div className='w-[17%] bg-white p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>
+  <img src={leopard} alt="" />
+</div>
+<div className='w-[17%] bg-white p-2 flex justify-center items-center rounded-[50%] border-2 border-[#22543d48]'>
+  <img src={rhino} alt="" />
+</div>
 </div>
 </div>
 
 {/* // the container containing the codes for the sightings */}
 <div className='w-[100%] flex flex-col justify-center items-center mt-5'>
   <div className='w-[90%]'>
-    <h2 className='text-xl font-bold text-left'>Sights</h2>
+    <h2 className='text-xl my-2 font-bold text-left'>Sights</h2>
   </div>
   <div className='w-[90%] space-y-2  flex flex-col justify-start items-center'>
     <div className='w-[100%] '>
