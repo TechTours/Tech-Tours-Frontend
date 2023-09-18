@@ -24,8 +24,13 @@ import AdminUsersProfile from './pages/AdminUsersProfile';
 const App = () => {
   function AuthenticatedRoutes() {
     const token = localStorage.getItem("token");
-    if (token !== null) {
+    const current = Date.now() / 1000;
+    if (token !== null ) {
       if (jwtDecode(token)) {
+        const decoded : any = jwtDecode(token!);
+        if(decoded?.exp < current) {
+          return <Navigate to={'/login'} />;
+        }
         return <PrivateRoutes />;
       } else {
         return <Navigate to={'/login'} />;

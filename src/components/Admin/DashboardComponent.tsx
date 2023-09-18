@@ -1,30 +1,30 @@
 import DataComponent from "./DataComponent";
 import React , {useState} from "react";
 import NotificationAdmin from "./NoticationAdmin";
-
+import axios from "axios";
+import { BASE_URL } from "../../api/apiConfig";
+import { Toast } from "react-toastify/dist/components";
+import Toastify from 'toastify-js';
+import { BallTriangle } from "react-loader-spinner";
+import "../../styles/animations.css"
 
 type Props = {
   getCurrentPage : (page : number , user : any)=>void
 }
 
 const DashboardComponent = (Props : Props) => {
+  const [isLoading , setIsLoading] = useState<boolean>(false)
+  const [usersNumber , setUsersNumber] = useState<number>(0)
+  const [activityNumber , setActivityNumber] = useState<number>(0)
 
     type dataType = {
         title : string,
-        value : string,
+        value : number,
         percentage : string,
         icon : string,
         color : string
         
     }
-
-    
-    const dataComp : dataType[] = [
-        { "title" : "Total number of accounts" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowUp" , "color" : "#009289" },
-        { "title" : "Reported Sightings" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowDown" , "color" : "#E29578" },
-        { "title" : "Drones in Use" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowDown" , "color" : "#E29578" },
-        { "title" : "Animals in the Park" , "value" : "27" , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowUp" , "color" : "#009289" },
-    ]
 
  const data = {
   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -56,6 +56,81 @@ const DashboardComponent = (Props : Props) => {
 const renderCreateUser = ()=>{
   Props.getCurrentPage(2.1 , null)
 }
+
+const getUsersNumber = async()=>{
+  const token = localStorage.getItem("token")
+  const headers = {
+    Authorization : `Bearer ${token}`
+  }
+
+  console.log(headers);
+
+  axios.get(`${BASE_URL}/users/all` , {headers : headers}).then((res)=>{
+    const data = res.data;
+    const number = data.length;
+    setUsersNumber(number)
+  }).catch((err)=>{
+    console.log(err);
+    setIsLoading(false)
+    Toastify({
+      text: "Error while fetching users",
+      backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+      className: "info",
+    }).showToast()
+  })
+}
+const getActivityNumber = async()=>{
+  const headers = {
+    Authorization : `Bearer ${localStorage.getItem("token")}`
+  }
+
+  axios.get(`${BASE_URL}/activity/all` , {headers : headers}).then((res)=>{
+    const data = res.data;
+    const number = data.length;
+    setActivityNumber(number)
+  }).catch((err)=>{
+    console.log(err);
+    setIsLoading(false)
+    Toastify({
+      text: "Error while fetching activity",
+      backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+      className: "info",
+    }).showToast()
+  })
+}
+
+const getDashBoardData = async()=>{
+  setIsLoading(true)
+  await getUsersNumber()
+  await getActivityNumber()
+  setIsLoading(false)
+}
+
+React.useEffect(() => {
+  getDashBoardData()
+}, [])
+
+const dataComp : dataType[] = [
+  { "title" : "Total number of accounts" , "value" : usersNumber , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowUp" , "color" : "#009289" },
+  { "title" : "Reported Sightings" , "value" : activityNumber , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowDown" , "color" : "#E29578" },
+  { "title" : "Drones in Use" , "value" : 1 , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowDown" , "color" : "#E29578" },
+  { "title" : "Animals in the Park" , "value" : activityNumber , "percentage" : "+12.5%" , "icon" : "AiOutlineArrowUp" , "color" : "#009289" },
+]
+
+if(isLoading){
+  return (
+    <div className="w-[100%] h-[100%] bg-[#F5F5F5] flex flex-col justify-center items-center">
+      <BallTriangle
+      color='#22543D'
+      />
+   <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+User Registration is in progress
+</p>
+      </div>
+  )
+}
+
+
     return ( 
         <div className="w-[100%] h-[100%] flex flex-col justify-center items-start ">
              {/* the first part start  */}

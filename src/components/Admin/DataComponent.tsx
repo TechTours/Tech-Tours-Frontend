@@ -2,7 +2,7 @@ import {AiOutlineArrowUp , AiOutlineArrowDown} from 'react-icons/ai'
 
 type props = {
   title : string,
-    value : string,
+    value : number,
     percentage : string,
     icon : string,
     color : string
