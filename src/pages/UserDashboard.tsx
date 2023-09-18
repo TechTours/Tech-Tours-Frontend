@@ -13,9 +13,9 @@ const UserDashboard = () => {
             </div>
             <div className="w-[100%] h-[90%] flex flex-col justify-center items-center">
                 <div className="my-3  flex flex-col justify-center items-center">
-                    {/* <div>
+                    <div>
                         <img src={logo} alt="" />
-                    </div> */}
+                    </div>
                     <h1 className="text-[#22543de5] font-bold">User Dashboard</h1>
                     <h2 className="text-black text-xl font-bold text-center mb-10">Important Links</h2>
                 </div>
