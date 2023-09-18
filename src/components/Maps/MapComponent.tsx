@@ -9,6 +9,8 @@ import rhino from '../../images/rhinoceros.png'
 import io from 'socket.io-client'; // Import socket.io-client
 import { BASE_SOCKET_URL, BASE_URL } from '../../api/apiConfig';
 import axios from 'axios';
+import { renderTime, isTimeBeforeCurrent } from '../../utils/timeFunctions';
+
 
 const MapComponent: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -52,7 +54,17 @@ const MapComponent: React.FC = () => {
     // Listen for WebSocket updates
     socket.on('data', (data) => {
       // Process and update pins based on the received data
-      const updatedPins = data.map((animal: any) => ({
+      const allActivities = data;
+      const newActivities = allActivities.filter((activity: any) => {
+        const isValid = isTimeBeforeCurrent(new Date(activity.time));
+        // Add the isValid property to the activity object
+        activity.time = renderTime(new Date(activity.time));
+        if(isValid){
+          return activity;
+        }
+      });
+
+      const updatedPins = newActivities.map((animal: any) => ({
         lat: animal.latitude,
         lng: animal.longitude,
         title: animal.animal,
@@ -103,7 +115,16 @@ const MapComponent: React.FC = () => {
         headers : authHeaders
       })
         .then((response) => {
-          const updatedPins = response.data.map((animal: any) => ({
+          const allActivities = response.data;
+          const newActivities = allActivities.filter((activity: any) => {
+            const isValid = isTimeBeforeCurrent(new Date(activity.time));
+            // Add the isValid property to the activity object
+            activity.time = renderTime(new Date(activity.time));
+            if(isValid){
+              return activity;
+            }
+          });
+          const updatedPins = newActivities.map((animal: any) => ({
             lat: animal.latitude,
             lng: animal.longitude,
             title: animal.animal,
