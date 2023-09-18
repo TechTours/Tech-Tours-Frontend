@@ -9,12 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@types/toastify-js": "^1.11.1",
     "axios": "^1.4.0",
+    "chart.js": "^4.4.0",
     "jwt-decode": "^3.1.2",
     "mapbox-gl": "^2.15.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-loader-spinner": "^5.4.5",

@@ -25,7 +25,7 @@ const Dashboard = () => {
                 <div className="w-[100%] h-[10%]  flex flex-row justify-center items-center">
                     <AdminHeader />
                 </div>
-                <div className="w-[100%] h-[90%] flex flex-row justify-center items-center ">
+                <div className="w-[100%] h-[90%] flex flex-row  justify-start overflow-y-scroll items-center ">
                     {
                         currentPage === 1 ? <DashboardComponent getCurrentPage={getCurrentPage} /> :  currentPage === 2 ?  <UsersDash /> : currentPage === 2.1 ? <CreateUserComponent /> : currentPage == 2.2 ? <UpdateAndViewUser user={user} /> : <ActivitiesTrack /> 
                     }
