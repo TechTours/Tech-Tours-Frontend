@@ -19,6 +19,7 @@ import AdminCreateUser from './pages/AdminCreateUser';
 import AdminUpdateAndView from './pages/AdminUpdateAndView';
 import LoderComponent from './components/Loaders/LoaderComponent';
 import EmailVerification from './pages/EmailVerification';
+import AdminUsersProfile from './pages/AdminUsersProfile';
 
 const App = () => {
   function AuthenticatedRoutes() {
@@ -56,6 +57,7 @@ const App = () => {
               <Route path="/admin/activities" element={<AdminActivitiesDash />} />
               <Route path="/admin/users/create" element={<AdminCreateUser />} />
               <Route path="/admin/users/update" element={<AdminUpdateAndView />} />
+              <Route path="/admin/profile" element={<AdminUsersProfile />} />
             </Route>
 
           </Route>

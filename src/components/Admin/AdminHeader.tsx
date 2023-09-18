@@ -54,7 +54,7 @@ const Header = () => {
     return ( 
         <div className=" w-[100vw] h-[100%] flex item-center justify-center ">
             <div className="w-[92%] flex flex-row font-bold text-xl items-center border-b-2 border-gray-300 justify-between">
-                <div className='text-[#22543D]'>Welcome Back, {user.username}</div>
+                <div className='text-[#22543D]'>Welcome Back, {user.fullname}</div>
                 <div className="flex ">
                 <div className='h-[100%] p-2 flex justify-center items-center text-2xl text-gray-400 font-light'><AiOutlineSearch /></div>
                     <div className='h-[100%] p-2 flex justify-center items-center text-2xl text-gray-400 font-extralight'><BiUserCircle className='cursor-pointer' onClick={showOrHideProfile}/></div>

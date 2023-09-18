@@ -152,12 +152,13 @@ const RegisterForm: React.FC = () => {
     })
       .catch((err) => {
         console.log(err);
+        SetIsLoading(false)
         Toastify({
           text: err.response.data.message,
           duration: 3000,
           gravity: "top",
           position: "left",
-          backgroundColor: "#ec55273f"
+          backgroundColor: "#ec5527"
         }).showToast();
       })
 
