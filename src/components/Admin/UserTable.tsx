@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import { useNavigate } from 'react-router-dom';
+import { BallTriangle } from 'react-loader-spinner';
+import { BsEmojiNeutral } from 'react-icons/bs';
 
 
 const UserTable = () => {
@@ -13,6 +15,7 @@ const UserTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8); // Change this number to adjust items per page
   const navigate = useNavigate();
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const getUsers = () => {
     setLoading(true);
@@ -29,6 +32,9 @@ const UserTable = () => {
           const allUsers = res.data;
           const filteredUsers = allUsers.filter((user: any) => user.isAdmin === false);
           setUsers(filteredUsers);
+          if(filteredUsers.length === 0){
+            setIsEmpty(true);
+          }
           setLoading(false);
         })
         .catch((err) => {
@@ -63,6 +69,40 @@ const UserTable = () => {
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
+
+  
+  if(isEmpty){
+  return (
+    <div className="bg-[#F5F5F5] flex flex-col justify-center items-center w-[100%]  p-4">
+      <BsEmojiNeutral  className="text-[5em]"/>
+    <p className="text-2xl font-bold text-[#22543D] mt-4 ">No Users Found</p>
+ </div>
+  )
+  }
+
+
+  if(error){
+    return (
+      <div className="bg-[#F5F5F5] flex flex-col justify-center items-center w-[100%]  p-4">
+        <BsEmojiNeutral  className="text-[5em] text-[#c76f3c]"/>
+      <p className="text-2xl font-bold text-[#c76f3c] mt-4 ">Error Fetching Users </p>
+   </div>
+    )
+    }
+
+  if(loading){
+    return (
+      <div className="w-[100%] h-[100%] bg-[#F5F5F5] flex flex-col justify-center items-center">
+        <BallTriangle
+        color='#22543D'
+        />
+     <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+  Activity Fetching is in progress
+</p>
+        </div>
+    )
+  }
+
 
   return (
     <div className="w-[95%] pt-3">
