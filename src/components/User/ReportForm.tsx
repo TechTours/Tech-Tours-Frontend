@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../api/apiConfig';
 import Toastify from 'toastify-js';
 import { useNavigate } from 'react-router-dom';
+import { BallTriangle } from 'react-loader-spinner';
 
 type Props = {
   setCurrentInputFunction: Function;
@@ -16,6 +17,7 @@ const ReportForm = (props: Props) => {
   const [time, setTime] = useState('');
   const [errors, setErrors] = useState<{ sighting?: string; time?: string }>({});
   const navigate = useNavigate();
+  const [isLoading , setIsLoading] = useState(false);
 
   // the states for the location fetching 
   const [latitude, setLatitude] = useState<number | undefined>(undefined);
@@ -62,6 +64,8 @@ const ReportForm = (props: Props) => {
       return;
     }
 
+    setIsLoading(true);
+
     // Form is valid, proceed with form submission
     console.log('Form submitted!');
     console.log('Current Location:', currentLocation);
@@ -80,6 +84,7 @@ const ReportForm = (props: Props) => {
     const timeDetected = new Date(timeNow.getTime() + timeToAdd * 60000);
 
     if(latitude == null || longitude == null || latitude == undefined || longitude == undefined){
+      setIsLoading(false);
       Toastify({
         text: "Failed to create an activity",
         duration: 3000,
@@ -101,23 +106,48 @@ const ReportForm = (props: Props) => {
 
     const token = localStorage.getItem('token')
     const headers = {
-      token : token
+        Authorization : `Bearer ${token}`
     }
 
     axios.post(`${BASE_URL}/activity/create` , body , {headers : headers})
     .then((res) => {
-      Toastify({
-        text: res.data.message,
-        duration: 3000,
-        gravity: "top",
-        position: "right",
-        backgroundColor: "green",
-        callback: function () {
-          navigate("/user/sightings");
-        }
-      }).showToast();
+      if(res.data.status === 201){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#22543D"
+        }).showToast();
+        navigate('/user/sightings')
+      }
+
+      if(res.data.status === 400){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
+      if(res.data.status === 500){
+        setIsLoading(false)
+        Toastify({
+          text: res.data.message,
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ec5527"
+        }).showToast();
+      }
+
     })
     .catch(err => {
+      setIsLoading(false);
       Toastify({
         text: "Failed to create an activity",
         duration: 3000,
@@ -128,6 +158,17 @@ const ReportForm = (props: Props) => {
     })
 
   };
+
+  if(isLoading){
+    return (
+      <div className="w-[100%] h-[100%] bg-white flex flex-col justify-center items-center">
+        <BallTriangle color='#22543D' />
+     <p className="mt-4 text-xl font-bold text-[#22543D] animate-pulse-opacity">
+  Reporting Activity ....
+</p>
+        </div>
+    )
+  }
 
   return (
     <div>

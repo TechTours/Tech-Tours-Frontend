@@ -67,7 +67,7 @@ const App = () => {
           <Route path="/unauthorized" element={<UnAuthorized />} />
           <Route path="/notfound" element={<NotFound />} />
           <Route path='/verify'  element={<EmailVerification />}/>
-          <Route path='/loader' element={<LoderComponent />} />
+          {/* <Route path='/loader' element={<LoderComponent />} />  */}
         </Routes>
       </Router>
     </div>
