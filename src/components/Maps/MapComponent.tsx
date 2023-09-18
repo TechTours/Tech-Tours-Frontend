@@ -98,7 +98,40 @@ const MapComponent: React.FC = () => {
         },
       });
 
-      // Your code to update markers should go here
+      // Fetch initial data from your API and update the map
+      axios.get(`${BASE_URL}/activity/all ` , {
+        headers : authHeaders
+      })
+        .then((response) => {
+          const updatedPins = response.data.map((animal: any) => ({
+            lat: animal.latitude,
+            lng: animal.longitude,
+            title: animal.animal,
+            type: animal.animal == 'Lion' ? 'type1' : animal.animal == 'Buffalo' ? 'type2' : animal.animal == 'Elephant' ? 'type3' : animal.animal == 'Leopard' ? 'type4' : 'type5',
+          }));
+          setPins(updatedPins);
+          // Process and update the map with the initialData
+
+           // Clear existing markers on the map
+      map.getSource('animal-locations').setData({
+        type: 'FeatureCollection',
+        features: [],
+      });
+    
+      // Add markers to the map based on updatedPins
+      updatedPins.forEach((pin : any, index : any) => {
+        const marker = new mapboxgl.Marker({
+          element: createCustomMarker(pin.type, iconMappings[pin.type], pin),
+        })
+          .setLngLat([pin.lng, pin.lat])
+          .addTo(map);
+      });
+
+          // You can use the same logic as in the socket.on('data', ...) handler
+        })
+        .catch((error) => {
+          console.error('Error fetching initial data:', error);
+        });
     });
 
     // Cleanup on unmount
