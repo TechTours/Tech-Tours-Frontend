@@ -2,10 +2,14 @@ import {BiUserCircle} from 'react-icons/bi'
 import {AiOutlineSearch} from 'react-icons/ai'
 import { useEffect, useState } from 'react'
 import Toastify from 'toastify-js';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import "../../styles/customstyles.css"
 
 const Header = () => {
     const [profile , setProfile] = useState(false)
     const [user , setUser] = useState({} as any)
+    const navigate = useNavigate()
     const getUser  = () => {
         const user = localStorage.getItem('user')
         if(user){
@@ -18,31 +22,30 @@ const Header = () => {
     }
 
     const handleLogout = () => {
-        Toastify({
-          text: 'Click on this toast to Logout',
-          duration: -1, // Set duration to infinite to keep the toast open
-          gravity: 'bottom',
-          position: 'right',
-          close: true,
-          backgroundColor: '#22543D',
-          onClick: function () {
-            // Handle user's decision
-              setUser(null); // Clear user data from state or local storage
-                localStorage.removeItem('user');
-                localStorage.removeItem('token');
-                localStorage.removeItem('isAdmin');
-              Toastify({
-                text: 'Logged out successfully',
-                duration: 3000,
-                gravity: 'bottom',
-                backgroundColor: '#22543D',
-                callback : function(){
-                    window.location.href = '/login'
-                }
-              }).showToast();
-            }
-          }).showToast();
-      };
+      Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure you want to logout ?',
+        showCancelButton: true,
+        confirmButtonText: 'Logout',
+        confirmButtonColor: '#b96138',
+        cancelButtonColor: '#22543D',
+        customClass: {
+          confirmButton: 'custom-confirm-button-class',
+          cancelButton: 'custom-cancel-button-class',
+        }
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          setUser(null); // Clear user data from state or local storage
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          localStorage.removeItem('isAdmin');
+          navigate('/login') 
+        } else if (result.isDenied) {
+          Swal.fire('Logout Canceled', '', 'info')
+        }
+      })
+    }
 
     useEffect(()=>{
         getUser()

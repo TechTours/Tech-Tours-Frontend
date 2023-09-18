@@ -2,6 +2,7 @@ import {RiHome4Line} from 'react-icons/ri'
 import {HiOutlineUserCircle , HiOutlineTrendingUp} from 'react-icons/hi'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../images/logo.png'
 
 type SideBarDashProps = {
     isSelected : number
@@ -13,7 +14,9 @@ const SideBarDash : React.FC<SideBarDashProps> = (props : SideBarDashProps) => {
     return ( 
         <div className="w-[100%] h-[100%] flex flex-col justify-start space-y-2.5">
             <div className="w-[100%] flex  justify-end items-end flex-col p-5 ">
-                <div className="w-[100%] pb-5 flex justify-center items-center text-black font-bold ">Logo</div>
+                <div className="w-[100%]  flex justify-center items-center text-black font-bold ">
+                    <img src={logo} alt="logo image" className='h-[50%] '/>
+                </div>
                 <div className="w-[100%] h-[2px] bg-[#0000001f] align-bottom  "></div>
             </div>
             <div className={

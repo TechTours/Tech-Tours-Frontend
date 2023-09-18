@@ -1,0 +1,20 @@
+/* Add this CSS to your stylesheet */
+.custom-confirm-button-class {
+    border: none; /* Remove the button border */
+    outline: none; /* Remove the button outline */
+    /* Add any other custom styling you want for the confirm button */
+  }
+  
+  .custom-cancel-button-class {
+    border: none; /* Remove the button border */
+    outline: none; /* Remove the button outline */
+    /* Add any other custom styling you want for the cancel button */
+  }
+  
+  .custom-confirm-button-class:focus,
+  .custom-cancel-button-class:focus {
+    /* Add any additional styling for focused buttons here, or leave empty for no outline */
+    outline: none;
+    border: none;
+  }
+  
